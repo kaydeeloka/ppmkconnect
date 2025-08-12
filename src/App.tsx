@@ -4,7 +4,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Activities from './pages/Activities'
 import Information from './pages/Information'
-import Articles from './pages/Articles'
+import Community from './pages/Community'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home')
@@ -19,15 +19,15 @@ function App() {
         return <Activities />
       case 'information':
         return <Information />
-      case 'articles':
-        return <Articles />
+      case 'community':
+        return <Community />
       default:
         return <Home />
     }
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 font-inter">
+    <div className="min-h-screen bg-ppmk-light font-inter">
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       <main>
         {renderPage()}

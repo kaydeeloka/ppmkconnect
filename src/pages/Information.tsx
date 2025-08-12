@@ -1,155 +1,172 @@
 import React from 'react'
-import { BookOpen, GraduationCap, Home, Briefcase, Heart, Phone, MapPin, Clock } from 'lucide-react'
+import { BookOpen, MapPin, Phone, CreditCard, Home, Plane, FileText, AlertCircle, CheckCircle, Info } from 'lucide-react'
 
 const Information = () => {
   const infoCategories = [
     {
-      icon: GraduationCap,
-      title: 'Academic Support',
-      color: 'bg-blue-600',
+      title: 'Visa & Immigration',
+      icon: FileText,
+      color: 'bg-ppmk-dark',
       items: [
-        'University application guidance',
-        'Scholarship information',
-        'Academic calendar and deadlines',
-        'Study group coordination',
-        'Research opportunities'
+        'Student visa (D-2) application process',
+        'Alien registration card procedures',
+        'Visa extension guidelines',
+        'Work permit regulations for students'
       ]
     },
     {
+      title: 'Accommodation',
       icon: Home,
-      title: 'Living in Korea',
-      color: 'bg-green-600',
+      color: 'bg-ppmk-dark/80',
       items: [
-        'Housing and accommodation',
-        'Banking and financial services',
-        'Healthcare and insurance',
-        'Transportation guide',
-        'Cultural adaptation tips'
+        'University dormitory applications',
+        'Off-campus housing options',
+        'Rental contract guidelines',
+        'Housing cost estimates by area'
       ]
     },
     {
-      icon: Briefcase,
-      title: 'Career Development',
-      color: 'bg-purple-600',
+      title: 'Banking & Finance',
+      icon: CreditCard,
+      color: 'bg-ppmk-dark/60',
       items: [
-        'Internship opportunities',
-        'Job search strategies',
-        'Resume and interview preparation',
-        'Networking events',
-        'Alumni mentorship program'
+        'Opening Korean bank accounts',
+        'International money transfers',
+        'Student discounts and benefits',
+        'Part-time job salary guidelines'
       ]
     },
     {
-      icon: Heart,
-      title: 'Wellness & Support',
-      color: 'bg-red-600',
+      title: 'Transportation',
+      icon: Plane,
+      color: 'bg-ppmk-dark/40',
       items: [
-        'Mental health resources',
-        'Emergency contacts',
-        'Counseling services',
-        'Peer support groups',
-        'Crisis intervention'
+        'T-money card and public transport',
+        'Student transportation discounts',
+        'Airport to university routes',
+        'Inter-city travel options'
       ]
     }
   ]
 
-  const quickLinks = [
+  const emergencyContacts = [
     {
-      title: 'Embassy Services',
-      description: 'Malaysian Embassy in Seoul contact information and services',
-      icon: MapPin,
-      link: '#'
+      service: 'Emergency Services',
+      number: '119',
+      description: 'Fire, ambulance, and rescue services'
     },
     {
-      title: 'Emergency Hotlines',
-      description: '24/7 emergency contacts and crisis support numbers',
-      icon: Phone,
-      link: '#'
+      service: 'Police',
+      number: '112',
+      description: 'General police emergency line'
     },
     {
-      title: 'Academic Calendar',
-      description: 'Important dates and deadlines for Korean universities',
-      icon: Clock,
-      link: '#'
+      service: 'Tourist Hotline',
+      number: '1330',
+      description: '24/7 tourist assistance in multiple languages'
     },
     {
-      title: 'Student Resources',
-      description: 'Comprehensive guide for Malaysian students in Korea',
-      icon: BookOpen,
-      link: '#'
+      service: 'Malaysian Embassy',
+      number: '+82-2-2077-8600',
+      description: 'Embassy of Malaysia in Seoul'
     }
   ]
 
-  const faqs = [
+  const universities = [
     {
-      question: 'How do I apply for a student visa to Korea?',
-      answer: 'You need to obtain a Certificate of Admission from a Korean university first, then apply for a D-2 student visa at the Korean embassy or consulate in Malaysia.'
+      name: 'Seoul National University',
+      location: 'Gwanak-gu, Seoul',
+      students: 45,
+      contact: 'snu@ppmk-korea.org'
     },
     {
-      question: 'What documents do I need for university application?',
-      answer: 'Typically required documents include academic transcripts, language proficiency certificates (TOPIK/IELTS), personal statement, recommendation letters, and passport copy.'
+      name: 'Yonsei University',
+      location: 'Seodaemun-gu, Seoul',
+      students: 38,
+      contact: 'yonsei@ppmk-korea.org'
     },
     {
-      question: 'How can I find accommodation in Korea?',
-      answer: 'Options include university dormitories, goshiwon (study rooms), hasukjib (boarding houses), and regular apartments. University housing is often the most convenient for new students.'
+      name: 'Korea University',
+      location: 'Seongbuk-gu, Seoul',
+      students: 42,
+      contact: 'korea@ppmk-korea.org'
     },
     {
-      question: 'What healthcare options are available for international students?',
-      answer: 'International students are required to enroll in National Health Insurance (NHI). This provides coverage for most medical services at a reasonable cost.'
+      name: 'KAIST',
+      location: 'Daejeon',
+      students: 28,
+      contact: 'kaist@ppmk-korea.org'
     },
     {
-      question: 'How do I open a bank account in Korea?',
-      answer: 'You can open a bank account with your passport, Alien Registration Card (ARC), and proof of enrollment. Major banks include KB, Shinhan, and Woori Bank.'
+      name: 'Pohang University of Science and Technology',
+      location: 'Pohang',
+      students: 15,
+      contact: 'postech@ppmk-korea.org'
+    },
+    {
+      name: 'Hanyang University',
+      location: 'Seongdong-gu, Seoul',
+      students: 32,
+      contact: 'hanyang@ppmk-korea.org'
+    }
+  ]
+
+  const quickTips = [
+    {
+      title: 'Language Preparation',
+      tip: 'Start learning basic Korean before arrival. TOPIK certification can help with scholarships.',
+      icon: BookOpen
+    },
+    {
+      title: 'Cultural Adaptation',
+      tip: 'Respect for elders and hierarchy is important in Korean culture. Bow when greeting.',
+      icon: Info
+    },
+    {
+      title: 'Weather Preparation',
+      tip: 'Korea has four distinct seasons. Prepare warm clothes for winter (-10°C to -20°C).',
+      icon: AlertCircle
+    },
+    {
+      title: 'Food & Dining',
+      tip: 'Halal food options are available in major cities. Check HalalKorea app for restaurants.',
+      icon: CheckCircle
     }
   ]
 
   return (
-    <div className="pt-8 pb-12">
+    <div className="pt-8 pb-12 bg-ppmk-light min-h-screen">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Information Hub</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Essential information and resources for Malaysian students studying in Korea. 
-            Find everything you need to succeed academically and personally.
-          </p>
-        </div>
-
-        {/* Quick Links */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {quickLinks.map((link, index) => {
-            const Icon = link.icon
-            return (
-              <div key={index} className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow duration-300 cursor-pointer">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{link.title}</h3>
-                <p className="text-gray-600 text-sm">{link.description}</p>
-              </div>
-            )
-          })}
+        <div className="text-center mb-16">
+          <div className="bg-white rounded-xl shadow-lg p-12 border border-ppmk-dark/10">
+            <h1 className="text-5xl font-bold text-ppmk-dark mb-6">Student Information</h1>
+            <p className="text-xl text-ppmk-dark/80 max-w-4xl mx-auto">
+              Essential information and resources for Malaysian students studying in Korea. 
+              From visa procedures to daily life tips, we've got you covered.
+            </p>
+          </div>
         </div>
 
         {/* Information Categories */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Information Categories</h2>
-          <div className="grid lg:grid-cols-2 gap-8">
+          <h2 className="text-3xl font-bold text-ppmk-dark mb-8 text-center">Essential Information</h2>
+          <div className="grid md:grid-cols-2 gap-8">
             {infoCategories.map((category, index) => {
               const Icon = category.icon
               return (
-                <div key={index} className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
-                  <div className="flex items-center space-x-4 mb-6">
+                <div key={index} className="bg-white rounded-xl shadow-lg p-6 border border-ppmk-dark/10">
+                  <div className="flex items-center space-x-3 mb-6">
                     <div className={`w-12 h-12 ${category.color} rounded-lg flex items-center justify-center`}>
-                      <Icon className="w-6 h-6 text-white" />
+                      <Icon className="w-7 h-7 text-ppmk-accent" />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900">{category.title}</h3>
+                    <h3 className="text-2xl font-bold text-ppmk-dark">{category.title}</h3>
                   </div>
                   <ul className="space-y-3">
                     {category.items.map((item, itemIndex) => (
                       <li key={itemIndex} className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-gray-400 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-gray-700">{item}</span>
+                        <div className="w-2 h-2 bg-ppmk-accent rounded-full mt-2 flex-shrink-0"></div>
+                        <span className="text-ppmk-dark/80">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -159,73 +176,92 @@ const Information = () => {
           </div>
         </div>
 
-        {/* FAQ Section */}
+        {/* University Network */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200">
-            <div className="divide-y divide-gray-200">
-              {faqs.map((faq, index) => (
-                <div key={index} className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">{faq.question}</h3>
-                  <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+          <h2 className="text-3xl font-bold text-ppmk-dark mb-8 text-center">PPMK University Network</h2>
+          <div className="bg-white rounded-xl shadow-lg p-8 border border-ppmk-dark/10">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {universities.map((university, index) => (
+                <div key={index} className="border border-ppmk-dark/10 rounded-lg p-4 hover:bg-ppmk-accent/10 transition-colors">
+                  <h3 className="font-bold text-ppmk-dark mb-2">{university.name}</h3>
+                  <div className="space-y-2 text-sm text-ppmk-dark/70">
+                    <div className="flex items-center space-x-2">
+                      <MapPin className="w-4 h-4" />
+                      <span>{university.location}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <BookOpen className="w-4 h-4" />
+                      <span>{university.students} Malaysian students</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Phone className="w-4 h-4" />
+                      <span className="text-ppmk-dark hover:underline cursor-pointer">{university.contact}</span>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Emergency Information */}
-        <div className="bg-red-50 rounded-xl border border-red-200 p-8 mb-16">
-          <div className="flex items-center space-x-3 mb-6">
-            <div className="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center">
-              <Phone className="w-6 h-6 text-white" />
-            </div>
-            <h2 className="text-2xl font-bold text-red-900">Emergency Information</h2>
+        {/* Quick Tips */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-ppmk-dark mb-8 text-center">Quick Tips for New Students</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {quickTips.map((tip, index) => {
+              const Icon = tip.icon
+              return (
+                <div key={index} className="bg-white rounded-xl shadow-lg p-6 border border-ppmk-dark/10">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-ppmk-accent/50 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-6 h-6 text-ppmk-dark" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-ppmk-dark mb-2">{tip.title}</h3>
+                      <p className="text-ppmk-dark/80">{tip.tip}</p>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
           </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg p-4 border border-red-200">
-              <h3 className="font-semibold text-red-900 mb-2">Emergency Services</h3>
-              <div className="space-y-1 text-sm">
-                <div>Police: <span className="font-mono font-bold">112</span></div>
-                <div>Fire/Ambulance: <span className="font-mono font-bold">119</span></div>
-                <div>Tourist Hotline: <span className="font-mono font-bold">1330</span></div>
-              </div>
-            </div>
-            
-            <div className="bg-white rounded-lg p-4 border border-red-200">
-              <h3 className="font-semibold text-red-900 mb-2">Malaysian Embassy</h3>
-              <div className="space-y-1 text-sm">
-                <div>Emergency: <span className="font-mono font-bold">+82-2-2077-8600</span></div>
-                <div>Consular: <span className="font-mono font-bold">+82-2-2077-8610</span></div>
-                <div>Address: Jung-gu, Seoul</div>
-              </div>
-            </div>
-            
-            <div className="bg-white rounded-lg p-4 border border-red-200">
-              <h3 className="font-semibold text-red-900 mb-2">PPMK Emergency</h3>
-              <div className="space-y-1 text-sm">
-                <div>24/7 Hotline: <span className="font-mono font-bold">+82-10-1234-5678</span></div>
-                <div>Email: <span className="font-mono">emergency@ppmk-korea.org</span></div>
-                <div>WeChat: PPMKEmergency</div>
-              </div>
+        </div>
+
+        {/* Emergency Contacts */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-ppmk-dark mb-8 text-center">Emergency Contacts</h2>
+          <div className="bg-white rounded-xl shadow-lg p-8 border border-ppmk-dark/10">
+            <div className="grid md:grid-cols-2 gap-6">
+              {emergencyContacts.map((contact, index) => (
+                <div key={index} className="border border-ppmk-dark/10 rounded-lg p-4 bg-red-50/50">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-bold text-ppmk-dark">{contact.service}</h3>
+                    <span className="text-2xl font-bold text-red-600">{contact.number}</span>
+                  </div>
+                  <p className="text-sm text-ppmk-dark/70">{contact.description}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Contact for More Information */}
-        <div className="bg-white rounded-xl shadow-lg p-12 text-center border border-gray-200">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Need More Information?</h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Can't find what you're looking for? Our information team is here to help you with any questions about studying and living in Korea.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-              Contact Information Team
-            </button>
-            <button className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
-              Submit a Question
-            </button>
+        {/* Call to Action */}
+        <div className="text-center">
+          <div className="bg-ppmk-dark rounded-xl shadow-lg p-12 border border-ppmk-dark/10">
+            <Phone className="w-16 h-16 text-ppmk-accent mx-auto mb-6" />
+            <h2 className="text-4xl font-bold text-ppmk-accent mb-6">Need More Help?</h2>
+            <p className="text-xl text-ppmk-accent/90 mb-8 max-w-3xl mx-auto">
+              Our experienced members and alumni are here to help you navigate your Korean journey. 
+              Don't hesitate to reach out for personalized guidance and support.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <button className="bg-ppmk-accent text-ppmk-dark px-8 py-3 rounded-lg font-semibold hover:bg-ppmk-accent/90 transition-colors">
+                Contact Support
+              </button>
+              <button className="border-2 border-ppmk-accent text-ppmk-accent px-8 py-3 rounded-lg font-semibold hover:bg-ppmk-accent hover:text-ppmk-dark transition-colors">
+                Join WhatsApp Group
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,331 +1,346 @@
 import React, { useState } from 'react'
-import { MessageCircle, Users, Heart, Reply, MoreHorizontal, Search, Plus, TrendingUp, Clock, Pin } from 'lucide-react'
+import { Users, MapPin, Calendar, Clock, Mail, User, Target } from 'lucide-react'
 
 const Community = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all')
-  const [searchTerm, setSearchTerm] = useState('')
+  const [activeTab, setActiveTab] = useState('clubs')
 
-  const categories = [
-    { id: 'all', name: 'All Posts', count: 156 },
-    { id: 'general', name: 'General', count: 45 },
-    { id: 'academic', name: 'Academic Help', count: 32 },
-    { id: 'housing', name: 'Housing', count: 28 },
-    { id: 'social', name: 'Social Events', count: 25 },
-    { id: 'marketplace', name: 'Marketplace', count: 18 },
-    { id: 'jobs', name: 'Jobs & Internships', count: 8 }
+  const stats = [
+    { number: '8', label: 'Active Clubs', color: 'text-blue-600' },
+    { number: '343', label: 'Total Members', color: 'text-green-600' },
+    { number: '9', label: 'Years Established', color: 'text-purple-600' }
   ]
 
-  const pinnedPosts = [
+  const clubs = [
     {
-      id: 'pinned-1',
-      title: 'Welcome to MSKY Community Forum! 📢',
-      author: 'Admin Team',
-      content: 'Welcome to our community forum! Please read the community guidelines before posting. Let\'s keep this space positive and helpful for everyone.',
-      timestamp: '2024-01-01',
-      likes: 89,
-      replies: 12,
-      category: 'general',
-      pinned: true,
-      avatar: '👨‍💼'
+      name: 'PPMK Seoul Chapter',
+      type: 'Regional',
+      description: 'Main chapter serving Malaysian students in Seoul area universities including SNU, Yonsei, and Korea University',
+      members: 85,
+      established: 'Est. 2015',
+      location: 'Seoul Metropolitan Area',
+      email: 'seoul@ppmk.org',
+      president: {
+        name: 'Ahmad Rahman',
+        university: 'Seoul National University'
+      },
+      activities: ['Monthly gatherings', 'Academic support', 'Cultural events', 'New student orientation'],
+      contactLabel: 'Contact PPMK Seoul Chapter'
+    },
+    {
+      name: 'PPMK Busan Chapter',
+      type: 'Regional',
+      description: 'Supporting Malaysian students at Pusan National University and other Busan institutions',
+      members: 32,
+      established: 'Est. 2018',
+      location: 'Busan',
+      email: 'busan@ppmk.org',
+      president: {
+        name: 'Lim Soo Hwa',
+        university: 'Pusan National University'
+      },
+      activities: ['Beach cleanups', 'Study groups', 'Food festivals', 'City tours'],
+      contactLabel: 'Contact PPMK Busan Chapter'
+    },
+    {
+      name: 'PPMK Daejeon Chapter',
+      type: 'Regional',
+      description: 'Connecting Malaysian students at KAIST, Chungnam National University, and other Daejeon institutions',
+      members: 28,
+      established: 'Est. 2017',
+      location: 'Daejeon',
+      email: 'daejeon@ppmk.org',
+      president: {
+        name: 'Fatimah Zahra',
+        university: 'KAIST'
+      },
+      activities: ['Research symposiums', 'Tech meetups', 'Cultural exchange', 'Academic workshops'],
+      contactLabel: 'Contact PPMK Daejeon Chapter'
+    },
+    {
+      name: 'PPMK Medical Society',
+      type: 'Academic',
+      description: 'Supporting Malaysian medical students across Korean medical schools and hospitals',
+      members: 45,
+      established: 'Est. 2019',
+      location: 'Nationwide',
+      email: 'medical@ppmk.org',
+      president: {
+        name: 'Dr. Sarah Lee',
+        university: 'Yonsei University College of Medicine'
+      },
+      activities: ['Medical conferences', 'Clinical rotations', 'Research collaboration', 'Mentorship programs'],
+      contactLabel: 'Contact PPMK Medical Society'
     }
   ]
 
-  const posts = [
+  const events = [
     {
-      id: 1,
-      title: 'Looking for roommate in Hongdae area 🏠',
-      author: 'Sarah Kim',
-      content: 'Hi everyone! I\'m looking for a female roommate to share a 2-bedroom apartment in Hongdae. Rent is 600,000 KRW per month per person. The place is fully furnished and very close to Hongik University. DM me if interested!',
-      timestamp: '2024-01-20T10:30:00',
-      likes: 15,
-      replies: 8,
-      category: 'housing',
-      avatar: '👩‍🎓',
-      trending: true
+      title: 'Traditional Malaysian Cooking Workshop',
+      date: '18/02/2024',
+      time: '2:00 PM - 5:00 PM',
+      location: 'Seoul Community Kitchen',
+      description: 'Learn to cook authentic Malaysian dishes including rendang, nasi lemak, and onde-onde',
+      price: 'Free',
+      organizer: 'Cultural Arts Society',
+      host: 'Siti Nurhaliza Rahman',
+      tags: ['Cooking', 'Culture', 'Food'],
+      attendees: '18/20',
+      buttonText: 'Register'
     },
     {
-      id: 2,
-      title: 'Korean Language Exchange Partner Needed 🇰🇷',
-      author: 'Ahmad Rahman',
-      content: 'Looking for a Korean native speaker who wants to practice English or Malay. I\'m intermediate level in Korean and would love to improve through conversation practice. We can meet at cafes in Gangnam area.',
-      timestamp: '2024-01-20T09:15:00',
-      likes: 23,
-      replies: 12,
-      category: 'academic',
-      avatar: '👨‍🎓'
+      title: 'Korean-Malaysian Language Exchange',
+      date: '22/02/2024',
+      time: '7:00 PM - 9:00 PM',
+      location: 'Hongdae Language Cafe',
+      description: 'Practice Korean and Malay/English in a friendly, relaxed environment with native speakers',
+      price: '₩10,000',
+      organizer: 'Individual',
+      host: 'Kim Min-jun & Ahmad Faiz',
+      tags: ['Language', 'Exchange', 'Social'],
+      attendees: '12/15',
+      buttonText: 'Register'
     },
     {
-      id: 3,
-      title: 'Selling iPhone 14 Pro - Great Condition! 📱',
-      author: 'Michelle Wong',
-      content: 'Moving back to Malaysia soon and selling my iPhone 14 Pro (256GB, Space Black). Bought it 8 months ago, still under warranty. Asking for 900,000 KRW. Comes with original box and accessories.',
-      timestamp: '2024-01-20T08:45:00',
-      likes: 7,
-      replies: 5,
-      category: 'marketplace',
-      avatar: '👩‍💻'
+      title: 'AI Research Symposium',
+      date: '25/02/2024',
+      time: '10:00 AM - 4:00 PM',
+      location: 'KAIST Campus',
+      description: 'Presentations on cutting-edge AI research by Malaysian students and industry professionals',
+      price: 'Free',
+      organizer: 'STEM Research Collective',
+      host: 'Dr. Nurul Huda',
+      tags: ['Research', 'AI', 'Technology', 'Academic'],
+      attendees: '65/80',
+      buttonText: 'Register'
     },
     {
-      id: 4,
-      title: 'Hari Raya Celebration Planning Committee 🌙',
-      author: 'Fatimah Zahra',
-      content: 'We\'re forming a committee to organize this year\'s Hari Raya celebration! We need volunteers for decoration, food coordination, and entertainment. The event will be held at Seoul Community Center. Who\'s interested in helping?',
-      timestamp: '2024-01-19T16:20:00',
-      likes: 34,
-      replies: 18,
-      category: 'social',
-      avatar: '👩‍🍳'
+      title: 'Badminton Tournament',
+      date: '02/03/2024',
+      time: '9:00 AM - 6:00 PM',
+      location: 'Olympic Park Sports Complex',
+      description: 'Annual inter-university badminton championship for Malaysian students',
+      price: '₩15,000',
+      organizer: 'PPMK Sports Committee',
+      host: 'Sports Committee',
+      tags: ['Sports', 'Tournament', 'Competition'],
+      attendees: '45/60',
+      buttonText: 'Register'
     },
     {
-      id: 5,
-      title: 'Part-time Job Opportunity at Korean Startup 💼',
-      author: 'Kevin Tan',
-      content: 'My company is looking for a part-time content creator who can speak English, Malay, and Korean. Perfect for students! Flexible hours, good pay. Experience with social media marketing is a plus. PM me for details.',
-      timestamp: '2024-01-19T14:10:00',
-      likes: 28,
-      replies: 15,
-      category: 'jobs',
-      avatar: '👨‍💼'
+      title: 'Photography Walk: Seoul in Spring',
+      date: '10/03/2024',
+      time: '8:00 AM - 12:00 PM',
+      location: 'Namsan Tower & Surroundings',
+      description: 'Capture the beauty of Seoul\'s cherry blossoms with fellow photography enthusiasts',
+      price: 'Free',
+      organizer: 'Photography Club',
+      host: 'Photography Club',
+      tags: ['Photography', 'Nature', 'Seoul', 'Spring'],
+      attendees: '25/30',
+      buttonText: 'Register'
     },
     {
-      id: 6,
-      title: 'Study Group for TOPIK Level 5 📚',
-      author: 'Lisa Chen',
-      content: 'Starting a study group for TOPIK Level 5 preparation. We\'ll meet twice a week at Gangnam Library. Looking for serious students who are committed to regular attendance. Current group has 3 members.',
-      timestamp: '2024-01-19T11:30:00',
-      likes: 19,
-      replies: 9,
-      category: 'academic',
-      avatar: '👩‍📚'
-    },
-    {
-      id: 7,
-      title: 'Weekend Hiking Trip to Seoraksan 🏔️',
-      author: 'Raj Kumar',
-      content: 'Planning a weekend hiking trip to Seoraksan National Park next month. Looking for 4-6 people to join. We\'ll take the bus from Seoul early Saturday morning and return Sunday evening. Cost estimate: 150,000 KRW per person.',
-      timestamp: '2024-01-18T20:45:00',
-      likes: 25,
-      replies: 11,
-      category: 'social',
-      avatar: '🧗‍♂️'
-    },
-    {
-      id: 8,
-      title: 'Free Korean Textbooks - Pick up in Sinchon 📖',
-      author: 'David Park',
-      content: 'I have several Korean language textbooks that I no longer need. All are in good condition. Includes levels 1-4 of "Korean Grammar in Use" series. First come, first served! Available for pickup in Sinchon area.',
-      timestamp: '2024-01-18T15:20:00',
-      likes: 12,
-      replies: 6,
-      category: 'academic',
-      avatar: '👨‍🏫'
+      title: 'Startup Pitch Night',
+      date: '15/03/2024',
+      time: '6:30 PM - 9:30 PM',
+      location: 'Gangnam Startup Hub',
+      description: 'Present your startup ideas to a panel of investors and entrepreneurs',
+      price: '₩20,000',
+      organizer: 'Entrepreneurship Society',
+      host: 'Entrepreneurship Society',
+      tags: ['Startup', 'Business', 'Networking', 'Innovation'],
+      attendees: '40/50',
+      buttonText: 'Register'
     }
   ]
-
-  const filteredPosts = posts.filter(post => {
-    const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.content.toLowerCase().includes(searchTerm.toLowerCase())
-    return matchesCategory && matchesSearch
-  })
-
-  const formatTimeAgo = (timestamp: string) => {
-    const now = new Date()
-    const postTime = new Date(timestamp)
-    const diffInHours = Math.floor((now.getTime() - postTime.getTime()) / (1000 * 60 * 60))
-    
-    if (diffInHours < 1) return 'Just now'
-    if (diffInHours < 24) return `${diffInHours}h ago`
-    const diffInDays = Math.floor(diffInHours / 24)
-    if (diffInDays < 7) return `${diffInDays}d ago`
-    return postTime.toLocaleDateString()
-  }
 
   return (
-    <div className="pt-24 pb-12 px-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <div className="glass-card rounded-3xl p-12 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-green-600/10 to-blue-600/10"></div>
-            <div className="relative z-10">
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
-                Community <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">Forum</span>
-              </h1>
-              <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                Connect with fellow Malaysian students, ask questions, share experiences, and build lasting friendships. 
-                Our community forum is your space to engage and support each other.
-              </p>
-            </div>
+    <div className="pt-8 pb-12 bg-ppmk-light min-h-screen">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold text-ppmk-dark mb-6">PPMK Community</h1>
+          <p className="text-xl text-ppmk-dark/80 max-w-4xl mx-auto mb-8">
+            Our vibrant community consists of various clubs and organizations that cater to 
+            different interests, academic pursuits, and regional connections across South Korea.
+          </p>
+          
+          {/* Stats */}
+          <div className="flex justify-center gap-8 mb-8">
+            {stats.map((stat, index) => (
+              <div key={index} className="bg-white rounded-xl shadow-lg p-6 border border-ppmk-dark/10 min-w-[140px]">
+                <div className={`text-4xl font-bold ${stat.color} mb-2`}>{stat.number}</div>
+                <div className="text-ppmk-dark/70 text-sm">{stat.label}</div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Search and Actions */}
-        <div className="glass-card rounded-2xl p-6 mb-8">
-          <div className="flex flex-col lg:flex-row gap-4 items-center">
-            {/* Search Bar */}
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search discussions..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-white/30 backdrop-blur-sm border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/50 text-gray-800 placeholder-gray-500"
-                />
-              </div>
-            </div>
-
-            {/* New Post Button */}
-            <button className="glass-card px-6 py-3 rounded-xl font-semibold text-green-700 hover:bg-white/40 transition-colors flex items-center space-x-2">
-              <Plus className="w-5 h-5" />
-              <span>New Post</span>
+        {/* Tab Navigation */}
+        <div className="flex justify-center mb-8">
+          <div className="bg-white rounded-xl shadow-lg p-2 border border-ppmk-dark/10">
+            <button
+              onClick={() => setActiveTab('clubs')}
+              className={`px-8 py-3 rounded-lg font-medium transition-all duration-200 ${
+                activeTab === 'clubs'
+                  ? 'bg-ppmk-dark text-ppmk-accent shadow-md'
+                  : 'text-ppmk-dark hover:bg-ppmk-accent/30'
+              }`}
+            >
+              Clubs & Organizations
+            </button>
+            <button
+              onClick={() => setActiveTab('events')}
+              className={`px-8 py-3 rounded-lg font-medium transition-all duration-200 ${
+                activeTab === 'events'
+                  ? 'bg-ppmk-dark text-ppmk-accent shadow-md'
+                  : 'text-ppmk-dark hover:bg-ppmk-accent/30'
+              }`}
+            >
+              Community Events
             </button>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="glass-card rounded-2xl p-6 sticky top-24">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">Categories</h3>
-              <div className="space-y-2">
-                {categories.map((category) => (
-                  <button
-                    key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
-                    className={`w-full text-left px-4 py-3 rounded-xl transition-colors flex items-center justify-between ${
-                      selectedCategory === category.id
-                        ? 'bg-green-500 text-white shadow-lg'
-                        : 'text-gray-700 hover:bg-white/30'
-                    }`}
-                  >
-                    <span className="font-medium">{category.name}</span>
-                    <span className="text-sm opacity-75">{category.count}</span>
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-8">
-                <h4 className="text-md font-bold text-gray-800 mb-4">Community Stats</h4>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Total Posts</span>
-                    <span className="font-semibold text-gray-800">156</span>
+        {/* Clubs & Organizations Tab */}
+        {activeTab === 'clubs' && (
+          <div className="grid md:grid-cols-2 gap-8">
+            {clubs.map((club, index) => (
+              <div key={index} className="bg-white rounded-xl shadow-lg p-6 border border-ppmk-dark/10">
+                <div className="flex items-start justify-between mb-4">
+                  <h3 className="text-2xl font-bold text-ppmk-dark">{club.name}</h3>
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                    {club.type}
+                  </span>
+                </div>
+                
+                <p className="text-ppmk-dark/80 mb-4">{club.description}</p>
+                
+                <div className="grid grid-cols-2 gap-4 mb-4 text-sm text-ppmk-dark/70">
+                  <div className="flex items-center space-x-2">
+                    <Users className="w-4 h-4" />
+                    <span>{club.members} members</span>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Active Members</span>
-                    <span className="font-semibold text-gray-800">89</span>
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="w-4 h-4" />
+                    <span>{club.established}</span>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">This Week</span>
-                    <span className="font-semibold text-gray-800">23</span>
+                  <div className="flex items-center space-x-2">
+                    <MapPin className="w-4 h-4" />
+                    <span>{club.location}</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Mail className="w-4 h-4" />
+                    <span>{club.email}</span>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Main Content */}
-          <div className="lg:col-span-3">
-            {/* Pinned Posts */}
-            {selectedCategory === 'all' && (
-              <div className="mb-8">
-                {pinnedPosts.map((post) => (
-                  <div key={post.id} className="glass-card rounded-2xl p-6 border-2 border-yellow-200/50 bg-yellow-50/20">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center text-white text-xl">
-                        <Pin className="w-6 h-6" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2 mb-2">
-                          <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full font-medium">
-                            Pinned
-                          </span>
-                          <span className="text-xs text-gray-500">by {post.author}</span>
-                        </div>
-                        <h3 className="text-lg font-bold text-gray-800 mb-2">{post.title}</h3>
-                        <p className="text-gray-600 text-sm mb-4">{post.content}</p>
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
-                          <div className="flex items-center space-x-1">
-                            <Heart className="w-4 h-4" />
-                            <span>{post.likes}</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <MessageCircle className="w-4 h-4" />
-                            <span>{post.replies}</span>
-                          </div>
-                        </div>
-                      </div>
+                <div className="mb-4">
+                  <h4 className="font-semibold text-ppmk-dark mb-2">Club President</h4>
+                  <div className="text-sm text-ppmk-dark/80">
+                    <div className="font-medium">{club.president.name}</div>
+                    <div className="text-ppmk-dark/60">{club.president.university}</div>
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <h4 className="font-semibold text-ppmk-dark mb-2 flex items-center">
+                    <Target className="w-4 h-4 mr-2" />
+                    Key Activities
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {club.activities.map((activity, actIndex) => (
+                      <span key={actIndex} className="bg-ppmk-accent/30 text-ppmk-dark px-3 py-1 rounded-full text-sm">
+                        {activity}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <button className="w-full bg-ppmk-light border border-ppmk-dark/20 text-ppmk-dark py-3 rounded-lg font-medium hover:bg-ppmk-accent/30 transition-colors flex items-center justify-center space-x-2">
+                  <Mail className="w-4 h-4" />
+                  <span>{club.contactLabel}</span>
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Community Events Tab */}
+        {activeTab === 'events' && (
+          <div>
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-ppmk-dark mb-4">Community Events</h2>
+              <p className="text-ppmk-dark/70">Events organized by our clubs and individual community members</p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {events.map((event, index) => (
+                <div key={index} className="bg-white rounded-xl shadow-lg p-6 border border-ppmk-dark/10">
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="text-xl font-bold text-ppmk-dark line-clamp-2">{event.title}</h3>
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                      event.price === 'Free' 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-blue-100 text-blue-800'
+                    }`}>
+                      {event.price}
+                    </span>
+                  </div>
+
+                  <div className="space-y-2 text-sm text-ppmk-dark/70 mb-4">
+                    <div className="flex items-center space-x-2">
+                      <Calendar className="w-4 h-4" />
+                      <span>{event.date}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Clock className="w-4 h-4" />
+                      <span>{event.time}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <MapPin className="w-4 h-4" />
+                      <span>{event.location}</span>
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
 
-            {/* Posts */}
-            <div className="space-y-6">
-              {filteredPosts.map((post) => (
-                <div key={post.id} className="glass-card rounded-2xl p-6 hover:bg-white/30 transition-colors">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center text-white text-xl">
-                      {post.avatar}
+                  <p className="text-ppmk-dark/80 text-sm mb-4 line-clamp-3">{event.description}</p>
+
+                  <div className="mb-4">
+                    <div className="flex items-center space-x-2 text-sm text-ppmk-dark/70 mb-2">
+                      <Users className="w-4 h-4" />
+                      <span>Organized by</span>
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center space-x-2">
-                          <span className="font-semibold text-gray-800">{post.author}</span>
-                          <span className="text-xs text-gray-500">•</span>
-                          <span className="text-xs text-gray-500">{formatTimeAgo(post.timestamp)}</span>
-                          {post.trending && (
-                            <div className="flex items-center space-x-1 text-xs text-orange-600">
-                              <TrendingUp className="w-3 h-3" />
-                              <span>Trending</span>
-                            </div>
-                          )}
-                        </div>
-                        <button className="p-2 hover:bg-white/20 rounded-lg transition-colors">
-                          <MoreHorizontal className="w-4 h-4 text-gray-600" />
-                        </button>
-                      </div>
-
-                      <div className="flex items-center space-x-2 mb-3">
-                        <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium capitalize">
-                          {post.category.replace('-', ' ')}
-                        </span>
-                      </div>
-
-                      <h3 className="text-lg font-bold text-gray-800 mb-3">{post.title}</h3>
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-3">{post.content}</p>
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-6">
-                          <button className="flex items-center space-x-2 text-sm text-gray-500 hover:text-red-500 transition-colors">
-                            <Heart className="w-4 h-4" />
-                            <span>{post.likes}</span>
-                          </button>
-                          <button className="flex items-center space-x-2 text-sm text-gray-500 hover:text-blue-500 transition-colors">
-                            <MessageCircle className="w-4 h-4" />
-                            <span>{post.replies}</span>
-                          </button>
-                          <button className="flex items-center space-x-2 text-sm text-gray-500 hover:text-green-500 transition-colors">
-                            <Reply className="w-4 h-4" />
-                            <span>Reply</span>
-                          </button>
-                        </div>
-                        <button className="text-blue-600 text-sm font-medium hover:text-blue-700">
-                          View Discussion →
-                        </button>
-                      </div>
+                    <div className="text-sm">
+                      <div className="font-medium text-ppmk-dark">{event.organizer}</div>
+                      <div className="text-ppmk-dark/60">Host: {event.host}</div>
                     </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {event.tags.map((tag, tagIndex) => (
+                      <span key={tagIndex} className="bg-ppmk-accent/30 text-ppmk-dark px-2 py-1 rounded text-xs">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2 text-sm text-ppmk-dark/70">
+                      <Users className="w-4 h-4" />
+                      <span>{event.attendees}</span>
+                    </div>
+                    <button className="bg-ppmk-dark text-ppmk-accent px-6 py-2 rounded-lg font-medium hover:bg-ppmk-dark/90 transition-colors">
+                      {event.buttonText}
+                    </button>
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
 
-              {filteredPosts.length === 0 && (
-                <div className="text-center py-12">
-                  <div className="glass-card rounded-2xl p-8 max-w-md mx-auto">
-                    <MessageCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">No Posts Found</h3>
-                    <p className="text-gray-600
+export default Community

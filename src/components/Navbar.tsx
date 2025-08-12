@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, X, GraduationCap, Home, Info, Calendar, FileText, BookOpen } from 'lucide-react'
+import { Menu, X, GraduationCap, Home, Info, Calendar, Users, BookOpen } from 'lucide-react'
 
 interface NavbarProps {
   currentPage: string
@@ -14,21 +14,21 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
     { id: 'about', label: 'About Us', icon: Info },
     { id: 'activities', label: 'Activities', icon: Calendar },
     { id: 'information', label: 'Information', icon: BookOpen },
-    { id: 'articles', label: 'Articles', icon: FileText },
+    { id: 'community', label: 'Community', icon: Users },
   ]
 
   return (
-    <nav className="bg-white shadow-lg border-b border-gray-200">
+    <nav className="bg-ppmk-light shadow-lg border-b border-ppmk-dark/20">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-              <GraduationCap className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 bg-ppmk-dark rounded-lg flex items-center justify-center">
+              <GraduationCap className="w-6 h-6 text-ppmk-accent" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">PPMK</h1>
-              <p className="text-xs text-gray-600">Persatuan Pelajar Malaysia Korea</p>
+              <h1 className="text-xl font-bold text-ppmk-dark">PPMK</h1>
+              <p className="text-xs text-ppmk-dark/70">Persatuan Pelajar Malaysia Korea</p>
             </div>
           </div>
 
@@ -42,8 +42,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                   onClick={() => setCurrentPage(item.id)}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                     currentPage === item.id
-                      ? 'bg-blue-600 text-white shadow-md'
-                      : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600'
+                      ? 'bg-ppmk-dark text-ppmk-accent shadow-md'
+                      : 'text-ppmk-dark hover:bg-ppmk-accent/30 hover:text-ppmk-dark'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -56,7 +56,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+            className="md:hidden p-2 rounded-lg hover:bg-ppmk-accent/30 text-ppmk-dark"
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -64,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
+          <div className="md:hidden py-4 border-t border-ppmk-dark/20">
             <div className="space-y-2">
               {navItems.map((item) => {
                 const Icon = item.icon
@@ -77,8 +77,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                     }}
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                       currentPage === item.id
-                        ? 'bg-blue-600 text-white'
-                        : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600'
+                        ? 'bg-ppmk-dark text-ppmk-accent'
+                        : 'text-ppmk-dark hover:bg-ppmk-accent/30 hover:text-ppmk-dark'
                     }`}
                   >
                     <Icon className="w-5 h-5" />
