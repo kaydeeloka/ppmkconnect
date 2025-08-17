@@ -138,7 +138,7 @@ const Information = () => {
     <div className="pt-8 pb-12 bg-ppmk-light min-h-screen">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 mt-20">
           <div className="bg-white rounded-xl shadow-lg p-12 border border-ppmk-dark/10">
             <h1 className="text-5xl font-bold text-ppmk-dark mb-6">Student Information</h1>
             <p className="text-xl text-ppmk-dark/80 max-w-4xl mx-auto">

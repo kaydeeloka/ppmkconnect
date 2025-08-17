@@ -158,7 +158,7 @@ const Community = () => {
     <div className="pt-8 pb-12 bg-ppmk-light min-h-screen">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 mt-20">
           <h1 className="text-5xl font-bold text-ppmk-dark mb-6">PPMK Community</h1>
           <p className="text-xl text-ppmk-dark/80 max-w-4xl mx-auto mb-8">
             Our vibrant community consists of various clubs and organizations that cater to 
