@@ -182,8 +182,11 @@ const About = () => {
         alt={sponsor.name}
         className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
         onError={(e) => {
-          e.target.style.display = 'none';
-          e.target.nextSibling.style.display = 'flex';
+          const img = e.target as HTMLImageElement;
+          img.style.display = 'none';
+          if (img.nextSibling && img.nextSibling instanceof HTMLElement) {
+            (img.nextSibling as HTMLElement).style.display = 'flex';
+          }
         }}
       />
       <div className="hidden w-full h-full bg-gradient-to-br from-ppmk-dark to-ppmk-dark/80 rounded-lg items-center justify-center">
