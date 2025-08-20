@@ -1,18 +1,15 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-
-interface User {
-  id: string
-  email: string
-  name: string
-}
+import React, { createContext, useContext, useState, useEffect } from 'react'
+import { supabase } from '../lib/supabase'
+import { User, LoginCredentials, SignupCredentials } from '../types/auth'
 
 interface AuthContextType {
   user: User | null
-  isAuthenticated: boolean
-  isLoading: boolean
-  login: (email: string, password: string) => Promise<void>
-  signup: (name: string, email: string, password: string) => Promise<void>
-  logout: () => void
+  loading: boolean
+  error: string | null
+  login: (credentials: LoginCredentials) => Promise<void>
+  signup: (credentials: SignupCredentials) => Promise<void>
+  logout: () => Promise<void>
+  clearError: () => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -25,79 +22,133 @@ export const useAuth = () => {
   return context
 }
 
-interface AuthProviderProps {
-  children: ReactNode
-}
-
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    // Check if user is logged in (from localStorage/sessionStorage)
-    const checkAuth = () => {
-      const storedUser = localStorage.getItem('user')
-      if (storedUser) {
-        setUser(JSON.parse(storedUser))
+    checkUser()
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session?.user) {
+        await fetchUserProfile(session.user.id)
+      } else {
+        setUser(null)
       }
-      setIsLoading(false)
+      setLoading(false)
+    })
+
+    return () => {
+      authListener.subscription.unsubscribe()
     }
-    checkAuth()
   }, [])
 
-  const login = async (email: string, password: string) => {
-    // Replace this with your actual API call
+  const checkUser = async () => {
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Mock successful login
-      const userData = {
-        id: '1',
-        email,
-        name: email.split('@')[0]
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session?.user) {
+        await fetchUserProfile(session.user.id)
       }
-      
-      setUser(userData)
-      localStorage.setItem('user', JSON.stringify(userData))
-      localStorage.setItem('token', 'mock-jwt-token') // Store your actual JWT token
     } catch (error) {
-      throw new Error('Invalid credentials')
+      console.error('Error checking user:', error)
+    } finally {
+      setLoading(false)
     }
   }
 
-  const signup = async (name: string, email: string, password: string) => {
-    // Replace this with your actual API call
+  const fetchUserProfile = async (userId: string) => {
     try {
-      // Validate university email
-      if (!email.endsWith('.ac.kr')) {
-        throw new Error('Please use a valid university email')
-      }
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', userId)
+        .single()
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Don't auto-login after signup, redirect to login page
-      // The signup component will handle the redirect
+      if (error) throw error
+      setUser(data)
     } catch (error) {
+      console.error('Error fetching user profile:', error)
+      setError('Failed to fetch user profile')
+    }
+  }
+
+  const login = async (credentials: LoginCredentials) => {
+    try {
+      setLoading(true)
+      setError(null)
+      
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: credentials.email,
+        password: credentials.password,
+      })
+
+      if (error) throw error
+      
+      if (data.user) {
+        await fetchUserProfile(data.user.id)
+      }
+    } catch (error: any) {
+      setError(error.message || 'Failed to login')
       throw error
+    } finally {
+      setLoading(false)
     }
   }
 
-  const logout = () => {
-    setUser(null)
-    localStorage.removeItem('user')
-    localStorage.removeItem('token')
+  const signup = async (credentials: SignupCredentials) => {
+    try {
+      setLoading(true)
+      setError(null)
+      
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: credentials.email,
+        password: credentials.password,
+      })
+
+      if (authError) throw authError
+
+      if (authData.user) {
+        const { error: profileError } = await supabase
+          .from('users')
+          .insert({
+            id: authData.user.id,
+            email: credentials.email,
+            username: credentials.username,
+            university: credentials.university,
+            batch_number: credentials.batch_number,
+          })
+
+        if (profileError) throw profileError
+        
+        await fetchUserProfile(authData.user.id)
+      }
+    } catch (error: any) {
+      setError(error.message || 'Failed to sign up')
+      throw error
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const value = {
-    user,
-    isAuthenticated: !!user,
-    isLoading,
-    login,
-    signup,
-    logout
+  const logout = async () => {
+    try {
+      setLoading(true)
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
+      setUser(null)
+    } catch (error: any) {
+      setError(error.message || 'Failed to logout')
+      throw error
+    } finally {
+      setLoading(false)
+    }
   }
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  const clearError = () => setError(null)
+
+  return (
+    <AuthContext.Provider value={{ user, loading, error, login, signup, logout, clearError }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
