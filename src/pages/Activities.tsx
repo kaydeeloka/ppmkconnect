@@ -1,268 +1,366 @@
-import React from 'react'
-import { Calendar, MapPin, Users, Clock, Trophy, Camera, Music, Utensils, GraduationCap, Heart } from 'lucide-react'
+import React, { useRef, useState } from "react";
+import { Calendar as CalIcon, MapPin, Users, ExternalLink, Images } from "lucide-react";
 
-const Activities = () => {
-  const upcomingEvents = [
-    {
-      id: 1,
-      title: 'Hari Raya Aidilfitri Celebration 2024',
-      date: '2024-04-15',
-      time: '18:00 - 22:00',
-      location: 'Seoul Community Center, Gangnam',
-      attendees: 120,
-      category: 'Cultural',
-      image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=250&fit=crop',
-      description: 'Join us for a traditional Hari Raya celebration with authentic Malaysian cuisine, cultural performances, and community bonding.',
-      icon: Heart
-    },
-    {
-      id: 2,
-      title: 'Career Development Workshop',
-      date: '2024-03-20',
-      time: '14:00 - 17:00',
-      location: 'COEX Convention Center',
-      attendees: 200,
-      category: 'Professional',
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=250&fit=crop',
-      description: 'Professional development workshop featuring industry experts and networking opportunities with Korean companies.',
-      icon: GraduationCap
-    },
-    {
-      id: 3,
-      title: 'Korean Language Exchange',
-      date: '2024-02-28',
-      time: '19:00 - 21:00',
-      location: 'Hongdae Study Cafe',
-      attendees: 45,
-      category: 'Educational',
-      image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=250&fit=crop',
-      description: 'Practice Korean with native speakers while helping them learn English or Malay in a friendly environment.',
-      icon: Users
-    }
-  ]
+/*Manual event data (edit here)*/
 
-  const pastEvents = [
-    {
-      id: 1,
-      title: 'Malaysia Night 2023',
-      date: '2023-11-25',
-      attendees: 300,
-      category: 'Cultural',
-      image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=250&fit=crop',
-      highlights: ['Traditional dance performances', 'Malaysian food festival', 'Cultural exhibition']
-    },
-    {
-      id: 2,
-      title: 'Academic Excellence Awards',
-      date: '2023-10-15',
-      attendees: 150,
-      category: 'Academic',
-      image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop',
-      highlights: ['Dean\'s list recognition', 'Scholarship presentations', 'Academic networking']
-    },
-    {
-      id: 3,
-      title: 'Seoul City Tour',
-      date: '2023-09-20',
-      attendees: 80,
-      category: 'Social',
-      image: 'https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=400&h=250&fit=crop',
-      highlights: ['Gyeongbokgung Palace visit', 'Bukchon Hanok Village', 'Traditional Korean lunch']
-    }
-  ]
+type EventLite = {
+  title: string;
+  date: string;            
+  location?: string;
+  attendees?: number;
+  image?: string;          // optional image for cards
+  registerUrl?: string;    // for upcoming events
+  galleryUrl?: string;     // for past events
+};
 
-  const activityCategories = [
-    {
-      name: 'Cultural Events',
-      icon: Music,
-      count: 12,
-      color: 'bg-ppmk-dark',
-      description: 'Celebrating Malaysian heritage and traditions'
-    },
-    {
-      name: 'Academic Support',
-      icon: GraduationCap,
-      count: 8,
-      color: 'bg-ppmk-dark/80',
-      description: 'Study groups and academic workshops'
-    },
-    {
-      name: 'Professional Development',
-      icon: Trophy,
-      count: 6,
-      color: 'bg-ppmk-dark/60',
-      description: 'Career guidance and networking events'
-    },
-    {
-      name: 'Social Gatherings',
-      icon: Users,
-      count: 15,
-      color: 'bg-ppmk-dark/40',
-      description: 'Community building and friendship activities'
-    }
-  ]
+const PAST_EVENTS: EventLite[] = [
+  { title: "Chinese New Year Celebration", date: "21/01/2025", image: "/gallery/CNY.jpeg", galleryUrl: "https://www.instagram.com/p/DFbtxdJTM-m/?hl=en&img_index=1" },
+  { title: "Majlis Berbuka Puasa",      date: "08/03/2025", image: "/gallery/march.jpeg", galleryUrl: "https://www.instagram.com/p/DHAQB7rzhjh/?hl=en" },
+  { title: "Bazaar Ramadhan",      date: "15/03/2025", image: "/gallery/Bazaar.jpeg", galleryUrl: "https://www.instagram.com/p/DHfx20pz9pt/?hl=en" },
+  { title: "Ihya' Ramadhan",      date: "16/03/2025", image: "/gallery/Ihya.jpeg", galleryUrl: "https://www.instagram.com/p/DHQRRsKTxy3/?hl=en&img_index=1" },
+  { title: "Eid Mubarak",          date: "31/03/2025", image: "/gallery/march.jpeg", galleryUrl: "https://www.instagram.com/p/DIaV_pCz1nc/?hl=en" },
+  { title: "Woo Young Woo", date: "12/04/2025", image: "/gallery/WYW.jpeg", galleryUrl: "https://www.instagram.com/p/DIYa3uWT8uN/?hl=en&img_index=1" },
+  { title: "E-Kasuma",       date: "26/04/2025", image: "/gallery/EKasuma.jpeg", galleryUrl: "https://www.instagram.com/p/DI-L1yMTyTG/?hl=en&img_index=3" },
+  { title: "Hari Kebudayaan",          date: "10/05/2025", image: "/gallery/HariKebudayaan.jpeg", galleryUrl: "https://www.instagram.com/p/DJi7vLgTWy5/?hl=en&img_index=1" },
+  { title: "ASEAN SEAmposium",          date: "11/05/2025", image: "/gallery/ASEAN.jpeg", galleryUrl: "https://www.instagram.com/p/DJqrTm5ToXW/?hl=en&img_index=1" },
+  { title: "Kasuma Spring",             date: "25/05/2025", image: "/gallery/KasumaSpring.jpeg", galleryUrl: "https://www.instagram.com/p/DKXJATVTiIZ/?hl=en&img_index=1" },
+  { title: "Course and Career Talk",    date: "28/06/2025", image: "/gallery/CnC.jpeg" },
+  { title: "Summer Hiking",             date: "05/07/2025", image: "/gallery/SummerHiking.jpeg", galleryUrl: "https://www.instagram.com/p/DL0vJqFoK5j/?hl=en&img_index=1" },
+  { title: "Hack PPMK25",           date: "10/08/2025", image: "/gallery/Hacks.jpeg"},
+];
 
-  return (
-    <div className="pt-8 pb-12 bg-ppmk-light min-h-screen">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-16 mt-20">
-          <div className="bg-white rounded-xl shadow-lg p-12 border border-ppmk-dark/10">
-            <h1 className="text-5xl font-bold text-ppmk-dark mb-6">Activities & Events</h1>
-            <p className="text-xl text-ppmk-dark/80 max-w-4xl mx-auto">
-              Discover the vibrant community life at PPMK through our diverse range of cultural, 
-              academic, and social activities designed to enrich your Korean experience.
-            </p>
-          </div>
-        </div>
+const UPCOMING_EVENTS: EventLite[] = [
+  { title: "Sambutan Hari Kemerdekaan", date: "31/08/2025", image: "/gallery/Merdeka.jpeg", registerUrl: "https://drive.google.com/drive/folders/10JGq0jKtPDPJ5cCPjqE0YGS2ZJoQfi-G" },
+  { title: "Larian Madani", date: "01/10/2025", image: "/gallery/Larian.jpeg", registerUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdrottrY76FmIwlUhINhHULmnVwTmlB24Ckfn5OYccFoj1XbA/closedform?pli=1" },
+];
 
-        {/* Activity Categories */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-ppmk-dark mb-8 text-center">Activity Categories</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {activityCategories.map((category, index) => {
-              const Icon = category.icon
-              return (
-                <div key={index} className="bg-white rounded-xl shadow-lg p-6 border border-ppmk-dark/10 hover:shadow-xl transition-shadow duration-300">
-                  <div className={`w-16 h-16 ${category.color} rounded-lg flex items-center justify-center mb-4`}>
-                    <Icon className="w-8 h-8 text-ppmk-accent" />
-                  </div>
-                  <h3 className="text-xl font-bold text-ppmk-dark mb-2">{category.name}</h3>
-                  <p className="text-ppmk-dark/70 text-sm mb-3">{category.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-ppmk-dark">{category.count}</span>
-                    <span className="text-sm text-ppmk-dark/60">events/year</span>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
+/*Yearly Activities (2025)*/
+type MonthBlock = { month: string; items: { title: string; date: string }[] };
 
-        {/* Upcoming Events */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-ppmk-dark mb-8 text-center">Upcoming Events</h2>
-          <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {upcomingEvents.map((event) => {
-              const Icon = event.icon
-              return (
-                <div key={event.id} className="bg-white rounded-xl shadow-lg overflow-hidden border border-ppmk-dark/10 hover:shadow-xl transition-shadow duration-300">
-                  <img 
-                    src={event.image} 
-                    alt={event.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="bg-ppmk-accent/30 text-ppmk-dark px-3 py-1 rounded-full text-sm font-medium">
-                        {event.category}
-                      </span>
-                      <Icon className="w-5 h-5 text-ppmk-dark" />
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-ppmk-dark mb-3">{event.title}</h3>
-                    <p className="text-ppmk-dark/70 text-sm mb-4 line-clamp-2">{event.description}</p>
-                    
-                    <div className="space-y-2 text-sm text-ppmk-dark/70 mb-4">
-                      <div className="flex items-center space-x-2">
-                        <Calendar className="w-4 h-4" />
-                        <span>{new Date(event.date).toLocaleDateString()}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Clock className="w-4 h-4" />
-                        <span>{event.time}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <MapPin className="w-4 h-4" />
-                        <span>{event.location}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Users className="w-4 h-4" />
-                        <span>{event.attendees} expected attendees</span>
-                      </div>
-                    </div>
-                    
-                    <button className="w-full bg-ppmk-dark text-ppmk-accent py-2 rounded-lg font-medium hover:bg-ppmk-dark/90 transition-colors">
-                      Register Now
-                    </button>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
+const yearlyData: MonthBlock[] = [
+  { month: "January", items: [
+    { title: "Chinese New Year Celebration", date: "21/01/2025" }] },
+  { month: "February", items: [{ title: "Orientation JPA", date: "28/02/2025" }] },
+  { month: "March", items: [
+      { title: "PenPal Participation", date: "10/03/2025" },
+      { title: "Majlis Berbuka Puasa", date: "08/03/2025" },
+      { title: "Bazaar Ramadhan", date: "15/03/2025" },
+      { title: "Ihya' Ramadhan", date: "16/03/2025" },
+      { title: "Eid Mubarak", date: "31/03/2025" },],},
+  { month: "April", items: [{title: "Woo Young Woo", date: "12/04/2025" },{ title: "E-Kasuma", date: "26/04/2025" },],},
+  {
+    month: "May", items: [
+      { title: "Hari Kebudayaan", date: "10/05/2025" },
+      { title: "ASEAN SEAmposium", date: "11/05/2025" },
+      { title: "Seoul Friendship Festival", date: "24/05/2025" },
+      { title: "Kasuma Spring", date: "25/05/2025" },],},
+  { month: "June", items: [{ title: "Course and Career Talk", date: "28/06/2025" }] },
+  { month: "July", items: [{ title: "Summer Hiking", date: "05/07/2025" }] },
+  {
+    month: "August",items: [
+      { title: "Hack PPMK25", date: "10/08/2025" },
+      { title: "Sambutan Hari Kemerdekaan", date: "31/08/2025" },],},
+  { month: "October", items: [{ title: "Larian Madani", date: "01/10/2025" }] },
+];
 
-        {/* Past Events */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-ppmk-dark mb-8 text-center">Past Events Highlights</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {pastEvents.map((event) => (
-              <div key={event.id} className="bg-white rounded-xl shadow-lg overflow-hidden border border-ppmk-dark/10">
-                <img 
-                  src={event.image} 
-                  alt={event.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="bg-ppmk-accent/30 text-ppmk-dark px-3 py-1 rounded-full text-sm font-medium">
-                      {event.category}
-                    </span>
-                    <Camera className="w-5 h-5 text-ppmk-dark" />
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-ppmk-dark mb-2">{event.title}</h3>
-                  
-                  <div className="flex items-center space-x-4 text-sm text-ppmk-dark/70 mb-4">
-                    <div className="flex items-center space-x-1">
-                      <Calendar className="w-4 h-4" />
-                      <span>{new Date(event.date).toLocaleDateString()}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Users className="w-4 h-4" />
-                      <span>{event.attendees} attendees</span>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-ppmk-dark text-sm">Event Highlights:</h4>
-                    <ul className="space-y-1">
-                      {event.highlights.map((highlight, index) => (
-                        <li key={index} className="text-sm text-ppmk-dark/70 flex items-center space-x-2">
-                          <div className="w-1.5 h-1.5 bg-ppmk-accent rounded-full"></div>
-                          <span>{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+const YearlyActivitiesSection: React.FC = () => (
+  <section className="bg-white/70 backdrop-blur rounded-xl shadow-lg p-8 border border-ppmk-dark/10">
+    <h2 className="text-2xl md:text-3xl font-bold text-ppmk-dark text-center">12 Months of Activities</h2>
+    <p className="text-ppmk-dark/70 text-center mt-2">We organize a variety of events throughout the year to foster community, culture, and connection among Malaysian students in Korea.</p>
+
+    <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {yearlyData.map((month) => (
+        <div key={month.month} className="bg-white rounded-2xl shadow-md p-6 border border-ppmk-dark/10">
+          <h3 className="text-lg font-semibold text-ppmk-dark mb-4">{month.month}</h3>
+          <div className="space-y-3">
+            {month.items.map((ev, i) => (
+              <div key={i} className="bg-white rounded-xl border border-ppmk-dark/10 px-4 py-3 shadow-sm">
+                <div className="font-semibold text-ppmk-dark">{ev.title}</div>
+                <div className="text-sm text-ppmk-dark/60 flex items-center gap-1 mt-1">
+                  <CalIcon className="w-4 h-4" />
+                  {ev.date}
                 </div>
               </div>
             ))}
           </div>
         </div>
+      ))}
+    </div>
+  </section>
+);
 
-        {/* Call to Action */}
-        <div className="text-center">
-          <div className="bg-ppmk-dark rounded-xl shadow-lg p-12 border border-ppmk-dark/10">
-            <Utensils className="w-16 h-16 text-ppmk-accent mx-auto mb-6" />
-            <h2 className="text-4xl font-bold text-ppmk-accent mb-6">Join Our Next Event</h2>
-            <p className="text-xl text-ppmk-accent/90 mb-8 max-w-3xl mx-auto">
-              Don't miss out on the opportunity to connect with fellow Malaysian students, 
-              experience Korean culture, and build lasting friendships. Your PPMK journey starts here!
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <button className="bg-ppmk-accent text-ppmk-dark px-8 py-3 rounded-lg font-semibold hover:bg-ppmk-accent/90 transition-colors">
-                View Event Calendar
-              </button>
-              <button className="border-2 border-ppmk-accent text-ppmk-accent px-8 py-3 rounded-lg font-semibold hover:bg-ppmk-accent hover:text-ppmk-dark transition-colors">
-                Suggest an Event
-              </button>
-            </div>
+/* Shared bits */
+
+const EventMeta: React.FC<{ event: EventLite }> = ({ event }) => (
+  <div className="mt-2 flex flex-wrap gap-4 text-sm text-ppmk-dark/80">
+    <span className="inline-flex items-center gap-1">
+      <CalIcon className="w-4 h-4" />
+      {event.date}
+    </span>
+    {event.location && (
+      <span className="inline-flex items-center gap-1">
+        <MapPin className="w-4 h-4" />
+        {event.location}
+      </span>
+    )}
+    {typeof event.attendees === "number" && (
+      <span className="inline-flex items-center gap-1">
+        <Users className="w-4 h-4" />
+        {event.attendees}
+      </span>
+    )}
+  </div>
+);
+
+const CTAButton: React.FC<{ href?: string; label: string }> = ({ href, label }) => {
+  if (!href) return null;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 bg-ppmk-dark text-white font-semibold px-4 py-2 rounded-lg hover:opacity-90"
+    >
+      {label} <ExternalLink className="w-4 h-4" />
+    </a>
+  );
+};
+
+/* Gallery (left column) */
+
+const Gallery: React.FC = () => {
+  const images = [
+    "/gallery/january.jpeg",
+    "/gallery/february.jpeg",
+    "/gallery/march.jpeg",
+    "/gallery/april.jpeg",
+    "/gallery/may.jpeg",
+    "/gallery/june.jpeg",
+    "/gallery/july.jpeg",
+    "/gallery/august.jpeg",
+  ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const nextImage = () => setCurrentIndex((i) => (i + 1) % images.length);
+  const prevImage = () => setCurrentIndex((i) => (i - 1 + images.length) % images.length);
+
+  return (
+    <section className="bg-white rounded-xl shadow-lg p-8 border border-ppmk-dark/10 h-full flex flex-col min-h-[420px]">
+      <h2 className="text-2xl font-bold text-ppmk-dark mb-6 text-center">Gallery</h2>
+      <div className="relative w-full h-80 md:h-96 lg:h-[28rem] rounded-xl overflow-hidden">
+        <img
+          src={images[currentIndex]}
+          alt={`Gallery ${currentIndex + 1}`}
+          className="absolute inset-0 w-full h-full object-contain"
+        />
+        <button
+          onClick={prevImage}
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-md"
+          aria-label="Previous"
+        >
+          ◀
+        </button>
+        <button
+          onClick={nextImage}
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-md"
+          aria-label="Next"
+        >
+          ▶
+        </button>
+      </div>
+    </section>
+  );
+};
+
+/* Past Events: swipeable carousel (right column) */
+
+const PastEventsCarousel: React.FC<{ events: EventLite[] }> = ({ events }) => {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  const scrollByStep = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const firstCard = el.querySelector<HTMLElement>("[data-card]");
+    const gap = 24; // matches gap-6
+    const step = firstCard ? firstCard.offsetWidth + gap : el.clientWidth * 0.9;
+    el.scrollBy({ left: step * dir, behavior: "smooth" });
+  };
+
+  return (
+    <section className="rounded-2xl p-8 border border-ppmk-dark/10 bg-white relative h-full">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-ppmk-dark rounded-lg flex items-center justify-center">
+            <Images className="w-6 h-6 text-white" />
           </div>
+          <h2 className="text-2xl font-bold text-ppmk-dark">Past Events</h2>
+        </div>
+
+        {/* Prev / Next (desktop) */}
+        <div className="hidden md:flex items-center gap-2">
+          <button
+            onClick={() => scrollByStep(-1)}
+            className="px-3 py-2 rounded-lg border border-ppmk-dark/10 bg-white hover:bg-ppmk-light"
+            aria-label="Previous"
+          >
+            ◀
+          </button>
+          <button
+            onClick={() => scrollByStep(1)}
+            className="px-3 py-2 rounded-lg border border-ppmk-dark/10 bg-white hover:bg-ppmk-light"
+            aria-label="Next"
+          >
+            ▶
+          </button>
+        </div>
+      </div>
+
+      {/* Horizontal scroller: shows 2 on small, 3 on large; swipe/drag to see more */}
+      <div
+        ref={scrollerRef}
+        className="
+          grid grid-flow-col gap-6 overflow-x-auto snap-x snap-mandatory
+          auto-cols-[75%] sm:auto-cols-[50%] lg:auto-cols-[33%]
+          scroll-smooth touch-pan-x
+          [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
+        "
+      >
+        {events.map((ev, idx) => (
+          <article
+            key={idx}
+            data-card
+            className="snap-start border border-ppmk-dark/10 rounded-xl overflow-hidden bg-white hover:shadow-md transition-shadow"
+          >
+            {ev.image ? (
+              <img src={ev.image} alt="" className="w-full h-56 md:h-64 object-cover" loading="lazy" />) : (
+              <div className="w-full h-56 md:h-64 bg-ppmk-dark/10" /> )}
+
+
+            <div className="p-4">
+              <div className="font-semibold text-ppmk-dark line-clamp-2">{ev.title}</div>
+              <EventMeta event={ev} />
+              <div className="mt-3">
+                <CTAButton href={ev.galleryUrl} label="View Gallery" />
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      {/* Mobile controls */}
+      <div className="mt-4 flex md:hidden justify-center gap-3">
+        <button
+          onClick={() => scrollByStep(-1)}
+          className="px-4 py-2 rounded-lg border border-ppmk-dark/10 bg-white"
+          aria-label="Previous"
+        >
+          ◀
+        </button>
+        <button
+          onClick={() => scrollByStep(1)}
+          className="px-4 py-2 rounded-lg border border-ppmk-dark/10 bg-white"
+          aria-label="Next"
+        >
+          ▶
+        </button>
+      </div>
+    </section>
+  );
+};
+
+/* Upcoming Events (full width, bottom) */
+
+const UpcomingEventsSection: React.FC<{ events: EventLite[] }> = ({ events }) => {
+  const [featured, ...rest] = events;
+
+  return (
+    <section className="rounded-2xl p-8 border border-ppmk-dark/10 bg-white ">
+      <h2 className="text-2xl font-bold text-ppmk-dark text-center">Upcoming Events</h2>
+      <p className="text-ppmk-dark/70 text-center mt-1">Join exciting activities across our community.</p>
+
+      <div className="mt-6 grid lg:grid-cols-12 gap-6">
+        {/* Featured */}
+        <div className="lg:col-span-7">
+          {featured ? (
+            <div className="relative overflow-hidden rounded-xl border border-ppmk-dark/10">
+              <div className="aspect-video relative">
+                {featured.image ? (
+                  <img src={featured.image} alt={featured.title} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-ppmk-dark/10" />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                <div className="absolute left-4 right-4 bottom-4 text-white">
+                  <span className="inline-block text-xs font-semibold bg-black/60 px-2 py-1 rounded-full mb-2">
+                    Featured
+                  </span>
+                  <h3 className="text-xl md:text-2xl font-bold leading-tight">{featured.title}</h3>
+                  <div className="text-white/90">
+                    <EventMeta event={featured} />
+                  </div>
+                  <div className="mt-3">
+                    <CTAButton href={featured.registerUrl} label="Register Now" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-xl border border-ppmk-dark/10 bg-white p-6 text-ppmk-dark/60">No upcoming events.</div>
+          )}
+        </div>
+
+        {/* 3 side cards */}
+        <div className="lg:col-span-5 grid grid-cols-1 gap-4">
+          {rest.slice(0, 3).map((ev, idx) => (
+            <div
+              key={idx}
+              className="rounded-xl border border-ppmk-dark/10 bg-white overflow-hidden hover:shadow-md transition-shadow"
+            >
+              <div className="flex gap-4">
+                <div className="w-32 h-24 shrink-0 overflow-hidden">
+                  {ev.image ? <img src={ev.image} alt="" className="w-full h-full object-cover" /> : <div className="w-full h-full bg-ppmk-dark/10" />}
+                </div>
+                <div className="py-3 pr-3 flex-1">
+                  <div className="font-semibold text-ppmk-dark line-clamp-2">{ev.title}</div>
+                  <EventMeta event={ev} />
+                  <div className="mt-2">
+                    <CTAButton href={ev.registerUrl} label="Register Now" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+          {rest.length === 0 && (
+            <div className="rounded-xl border border-ppmk-dark/10 bg-white p-6 text-ppmk-dark/60">More events will appear here.</div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* Page */
+
+const Activities: React.FC = () => {
+  return (
+    <div className="pt-8 pb-12 bg-ppmk-light min-h-screen">
+      <div className="max-w-7xl mx-auto px-4">
+
+        {/* Top: Yearly */}
+        <YearlyActivitiesSection />
+
+        {/* Middle: Gallery (left) + Past (right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10 items-stretch">
+          <Gallery />
+          <PastEventsCarousel events={PAST_EVENTS} />
+        </div>
+
+        {/* Bottom: Upcoming */}
+        <div className="mt-10 ">
+          <UpcomingEventsSection events={UPCOMING_EVENTS} />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Activities
+export default Activities;

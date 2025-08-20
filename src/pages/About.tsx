@@ -207,7 +207,6 @@ const About = () => {
   return (
     <div className="pt-8 pb-12 bg-ppmk-light min-h-screen">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-16 mt-20">
         {/* Header Section */}
         <div className="backdrop-blur-md bg-white/10 rounded-3xl p-8 sm:p-12 border border-white/20 shadow-2xl mb-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -332,10 +331,6 @@ const About = () => {
 
         {/* Committee Team */}
         <div className="mb-16">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-ppmk-dark mb-4">High Committee PPMK</h2>
-          </div>
-
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {committee.map((leader, index) => (
               <div key={index} className="bg-white rounded-xl shadow-lg p-6 text-center border border-ppmk-dark/10 hover:shadow-xl transition-shadow duration-300">
@@ -361,20 +356,35 @@ const About = () => {
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-8 border border-ppmk-dark/10">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 justify-items-center sm:justify-items-stretch">
-            {/* Each sponsor card */}
-              {sponsors.length % 4 === 3 && (
-                <div className="col-span-4 flex justify-center gap-8">
-                  {sponsors.slice(-3).map((sponsor, index) => (
-                    <SponsorCard key={index} sponsor={sponsor} />
-                  ))}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-center justify-items-center">
+              {sponsors.map((sponsor, index) => (
+                <div key={index} className="group text-center p-4 hover:bg-gray-50 rounded-lg transition-colors duration-300">
+                  <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center bg-gray-50 rounded-lg group-hover:bg-white transition-colors duration-300">
+                    <img
+                      src={sponsor.logo}
+                      alt={sponsor.name}
+                      className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                    <div className="hidden w-full h-full bg-gradient-to-br from-ppmk-dark to-ppmk-dark/80 rounded-lg items-center justify-center">
+                      <span className="text-white text-xs font-semibold text-center px-2">
+                        {sponsor.name.split(' ').slice(0, 2).join(' ')}
+                      </span>
+                    </div>
+                  </div>
+                  <h4 className="text-xs font-medium text-ppmk-dark text-center leading-tight mb-1">
+                    {sponsor.name}
+                  </h4>
+                  <p className="text-xs text-ppmk-dark/60 text-center">
+                    {sponsor.category}
+                  </p>
                 </div>
-              )}
-
-              {sponsors.slice(0, sponsors.length % 4 === 3 ? -3 : sponsors.length).map((sponsor, index) => (
-                <SponsorCard key={index} sponsor={sponsor} />
               ))}
             </div>
+            
             <div className="mt-8 text-center">
               <p className="text-sm text-ppmk-dark/70 italic">
                 We extend our heartfelt gratitude to all our partners, sponsors, and supporters who continue to believe in our mission and contribute to the success of Malaysian students in Korea.
@@ -384,7 +394,6 @@ const About = () => {
         </div>
       </div>
     </div>
-  </div>
   )
 }
 

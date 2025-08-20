@@ -24,9 +24,8 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="relative py-16 px-4 sm:px-6 lg:px-8 bg-ppmk-light">
-      <div className="max-w-7xl mx-auto">
-        <div className="backdrop-blur-md bg-white/10 rounded-3xl p-8 sm:p-12 border border-white/20 shadow-2xl">
+    <footer className="py-16 px-4 sm:px-6 lg:px-8 bg-ppmk-dark text-white">
+      <div className="rounded-none p-0 border-none">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Logo and Description */}
             <div>
@@ -43,8 +42,13 @@ const Footer = () => {
               <p className="text-sm text-ppmk-dark/70 mb-6">
                 Connecting Malaysian students across Korea's universities. Building friendships, sharing experiences, and supporting each other throughout our academic journey.
               </p>
-              
-              <div className="space-y-3 mb-6">
+            </div>
+
+            {/* Contact Us */}
+            <div>
+              <h4 className="font-semibold text-ppmk-dark mb-4">Contact Us</h4>
+              <ul className="space-y-2">
+                             <div className="space-y-3 mb-6">
                 <div className="flex items-center space-x-3 text-sm text-ppmk-dark/70">
                   <Phone className="w-4 h-4 flex-shrink-0" />
                   <span>+82-2-1234-5678</span>
@@ -73,6 +77,7 @@ const Footer = () => {
                   <Linkedin className="w-4 h-4 text-ppmk-dark" />
                 </a>
               </div>
+              </ul>
             </div>
 
             {/* Quick Links */}
@@ -89,61 +94,29 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* About Links */}
-            <div>
-              <h4 className="font-semibold text-ppmk-dark mb-4">About</h4>
-              <ul className="space-y-2">
-                {aboutLinks.map((link, index) => (
-                  <li key={index}>
-                    <a href={link.href} className="text-sm text-ppmk-dark/70 hover:text-ppmk-dark transition-colors">
-                      {link.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
             {/* Support & Contact */}
-            <div>
-              <h4 className="font-semibold text-ppmk-dark mb-4">Support</h4>
-              <ul className="space-y-2 mb-6">
-                {supportLinks.map((link, index) => (
-                  <li key={index}>
-                    <a href={link.href} className="text-sm text-ppmk-dark/70 hover:text-ppmk-dark transition-colors">
-                      {link.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="backdrop-blur-sm bg-ppmk-accent/10 rounded-lg p-4 border border-ppmk-accent/20">
-                <h5 className="font-semibold text-ppmk-dark mb-2 text-sm">WHERE TO FIND US?</h5>
-                <p className="text-xs text-ppmk-dark/70 mb-3">
-                  Malaysian Embassy<br />
-                  4-1 Hannam-dong<br />
-                  Yongsan-gu<br />
-                  Seoul 140-884<br />
-                  Republic of Korea
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Contact Section */}
-          <div className="mt-12 pt-8 border-t border-white/20">
-            <div className="backdrop-blur-sm bg-ppmk-dark/5 rounded-lg p-6 border border-ppmk-dark/10">
-              <h4 className="font-semibold text-ppmk-dark mb-4">Contact Information</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-ppmk-dark/70">
-                <div>
-                  <p className="font-medium text-ppmk-dark mb-1">Telephone: +82-2-2077-8600</p>
-                  <p>Emergency: +82-10-1234-5678</p>
-                </div>
-                <div>
-                  <p className="font-medium text-ppmk-dark mb-1">Working Hours: 9:00 AM - 6:00 PM</p>
-                  <p>Weekend: 10:00 AM - 4:00 PM</p>
-                </div>
-              </div>
-            </div>
+        <div>
+        <h4 className="font-semibold text-ppmk-dark mb-4">Find Us</h4>
+        <ul className="space-y-4 mb-6">
+            <li>
+            <p className="font-medium text-ppmk-dark">Telephone: <span className="font-normal">+82-2-2077-8600</span></p>
+            <p className="text-ppmk-dark">Emergency: <span className="font-normal">+82-10-1234-5678</span></p>
+            </li>
+            <li>
+            <p className="font-medium text-ppmk-dark">Working Hours: <span className="font-normal">9:00 AM – 6:00 PM</span></p>
+            <p className="text-ppmk-dark">Weekend: <span className="font-normal">10:00 AM – 4:00 PM</span></p>
+            </li>
+            <li>
+            <address className="not-italic text-sm text-ppmk-dark/70 leading-relaxed">
+                Malaysian Embassy<br />
+                4-1 Hannam-dong<br />
+                Yongsan-gu<br />
+                Seoul 140-884<br />
+                Republic of Korea
+            </address>
+            </li>
+        </ul>
+        </div>
           </div>
 
           {/* Copyright */}
@@ -158,7 +131,6 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
     </footer>
   )
 }
