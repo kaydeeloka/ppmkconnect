@@ -158,7 +158,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                         )}
                         {user.batch && (
                           <p className="text-sm text-gray-600 uppercase">
-                            Batch {user.batch}
+                            {user.batch}
                           </p>
                         )}
                       </div>
@@ -226,12 +226,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                 ) : user ? (
                   <div className="space-y-2">
                     <div className="px-4 py-3 rounded-2xl shadow-neumorphism-inset">
-                      <p className="text-sm font-semibold text-neumorphism-text">
+                      <p className="text-sm font-semibold text-neumorphism-text uppercase">
                         {user.fullName || user.email}
                       </p>
                       {user.university && (
-                        <p className="text-xs text-neumorphism-text-light mt-1">
-                          {user.university} • Batch {user.batch}
+                        <p className="text-xs text-neumorphism-text-light uppercase mt-1">
+                          {user.university} <br />
+                          {user.batch}
                         </p>
                       )}
                     </div>

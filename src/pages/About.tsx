@@ -174,36 +174,6 @@ const About = () => {
     }
   ]
 
-  const SponsorCard = ({ sponsor }) => (
-  <div className="group text-center p-4 hover:bg-gray-50 rounded-lg transition-colors duration-300">
-    <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center bg-gray-50 rounded-lg group-hover:bg-white transition-colors duration-300">
-      <img
-        src={sponsor.logo}
-        alt={sponsor.name}
-        className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
-        onError={(e) => {
-          const img = e.target as HTMLImageElement;
-          img.style.display = 'none';
-          if (img.nextSibling && img.nextSibling instanceof HTMLElement) {
-            (img.nextSibling as HTMLElement).style.display = 'flex';
-          }
-        }}
-      />
-      <div className="hidden w-full h-full bg-gradient-to-br from-ppmk-dark to-ppmk-dark/80 rounded-lg items-center justify-center">
-        <span className="text-white text-xs font-semibold text-center px-2">
-          {sponsor.name.split(' ').slice(0, 3).join(' ')}
-        </span>
-      </div>
-    </div>
-    <h4 className="text-xs font-medium text-ppmk-dark text-center leading-tight mb-1">
-      {sponsor.name}
-    </h4>
-    <p className="text-xs text-ppmk-dark/60 text-center">
-      {sponsor.category}
-    </p>
-  </div>
-);
-
   return (
     <div className="pt-8 pb-12 bg-ppmk-light min-h-screen">
       <div className="max-w-7xl mx-auto px-4">
