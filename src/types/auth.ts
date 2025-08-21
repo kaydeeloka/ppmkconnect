@@ -1,11 +1,10 @@
 export interface User {
   id: string
   email: string
-  username: string
-  university: string
-  batch_number: number
-  created_at?: string
-  updated_at?: string
+  university?: string
+  batch?: string
+  fullName?: string
+  createdAt?: string
 }
 
 export interface AuthState {
@@ -19,10 +18,8 @@ export interface LoginCredentials {
   password: string
 }
 
-export interface SignupCredentials {
-  email: string
-  username: string
-  password: string
+export interface SignUpCredentials extends LoginCredentials {
+  fullName: string
   university: string
-  batch_number: number
+  batch: string
 }

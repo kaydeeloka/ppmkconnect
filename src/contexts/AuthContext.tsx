@@ -1,15 +1,11 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
-import { User, LoginCredentials, SignupCredentials } from '../types/auth'
+import { User, AuthState } from '../types/auth'
 
-interface AuthContextType {
-  user: User | null
-  loading: boolean
-  error: string | null
-  login: (credentials: LoginCredentials) => Promise<void>
-  signup: (credentials: SignupCredentials) => Promise<void>
-  logout: () => Promise<void>
-  clearError: () => void
+interface AuthContextType extends AuthState {
+  signIn: (email: string, password: string) => Promise<void>
+  signUp: (email: string, password: string, metadata: any) => Promise<void>
+  signOut: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -23,23 +19,33 @@ export const useAuth = () => {
 }
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [authState, setAuthState] = useState<AuthState>({
+    user: null,
+    loading: true,
+    error: null
+  })
 
   useEffect(() => {
     checkUser()
+    
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (session?.user) {
-        await fetchUserProfile(session.user.id)
+        const userData: User = {
+          id: session.user.id,
+          email: session.user.email || '',
+          university: session.user.user_metadata?.university,
+          batch: session.user.user_metadata?.batch,
+          fullName: session.user.user_metadata?.fullName,
+          createdAt: session.user.created_at
+        }
+        setAuthState({ user: userData, loading: false, error: null })
       } else {
-        setUser(null)
+        setAuthState({ user: null, loading: false, error: null })
       }
-      setLoading(false)
     })
 
     return () => {
-      authListener.subscription.unsubscribe()
+      authListener?.subscription.unsubscribe()
     }
   }, [])
 
@@ -47,107 +53,65 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const { data: { session } } = await supabase.auth.getSession()
       if (session?.user) {
-        await fetchUserProfile(session.user.id)
+        const userData: User = {
+          id: session.user.id,
+          email: session.user.email || '',
+          university: session.user.user_metadata?.university,
+          batch: session.user.user_metadata?.batch,
+          fullName: session.user.user_metadata?.fullName,
+          createdAt: session.user.created_at
+        }
+        setAuthState({ user: userData, loading: false, error: null })
+      } else {
+        setAuthState({ user: null, loading: false, error: null })
       }
     } catch (error) {
-      console.error('Error checking user:', error)
-    } finally {
-      setLoading(false)
+      setAuthState({ user: null, loading: false, error: 'Failed to check authentication' })
     }
   }
 
-  const fetchUserProfile = async (userId: string) => {
+  const signIn = async (email: string, password: string) => {
     try {
-      const { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('id', userId)
-        .single()
-
+      setAuthState(prev => ({ ...prev, loading: true, error: null }))
+      const { error } = await supabase.auth.signInWithPassword({ email, password })
       if (error) throw error
-      setUser(data)
-    } catch (error) {
-      console.error('Error fetching user profile:', error)
-      setError('Failed to fetch user profile')
+    } catch (error: any) {
+      setAuthState(prev => ({ ...prev, loading: false, error: error.message }))
+      throw error
     }
   }
 
-  const login = async (credentials: LoginCredentials) => {
+  const signUp = async (email: string, password: string, metadata: any) => {
     try {
-      setLoading(true)
-      setError(null)
-      
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: credentials.email,
-        password: credentials.password,
+      setAuthState(prev => ({ ...prev, loading: true, error: null }))
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: metadata
+        }
       })
-
       if (error) throw error
-      
-      if (data.user) {
-        await fetchUserProfile(data.user.id)
-      }
     } catch (error: any) {
-      setError(error.message || 'Failed to login')
+      setAuthState(prev => ({ ...prev, loading: false, error: error.message }))
       throw error
-    } finally {
-      setLoading(false)
     }
   }
 
-  const signup = async (credentials: SignupCredentials) => {
+  const signOut = async () => {
     try {
-      setLoading(true)
-      setError(null)
-      
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: credentials.email,
-        password: credentials.password,
-      })
-
-      if (authError) throw authError
-
-      if (authData.user) {
-        const { error: profileError } = await supabase
-          .from('users')
-          .insert({
-            id: authData.user.id,
-            email: credentials.email,
-            username: credentials.username,
-            university: credentials.university,
-            batch_number: credentials.batch_number,
-          })
-
-        if (profileError) throw profileError
-        
-        await fetchUserProfile(authData.user.id)
-      }
-    } catch (error: any) {
-      setError(error.message || 'Failed to sign up')
-      throw error
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const logout = async () => {
-    try {
-      setLoading(true)
+      setAuthState(prev => ({ ...prev, loading: true, error: null }))
       const { error } = await supabase.auth.signOut()
       if (error) throw error
-      setUser(null)
+      setAuthState({ user: null, loading: false, error: null })
     } catch (error: any) {
-      setError(error.message || 'Failed to logout')
+      setAuthState(prev => ({ ...prev, loading: false, error: error.message }))
       throw error
-    } finally {
-      setLoading(false)
     }
   }
 
-  const clearError = () => setError(null)
-
   return (
-    <AuthContext.Provider value={{ user, loading, error, login, signup, logout, clearError }}>
+    <AuthContext.Provider value={{ ...authState, signIn, signUp, signOut }}>
       {children}
     </AuthContext.Provider>
   )

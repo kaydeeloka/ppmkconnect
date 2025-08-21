@@ -1,18 +1,14 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './contexts/AuthContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import { Login } from './pages/Login'
-import { Signup } from './pages/Signup'
-import { ProtectedRoute } from './components/ProtectedRoute'
-import { AuthProvider } from './contexts/AuthContext'
 import Home from './pages/Home'
 import About from './pages/About'
 import Activities from './pages/Activities'
 import Information from './pages/Information'
 import Community from './pages/Community'
 
-function App() {
+function AppContent() {
   const [currentPage, setCurrentPage] = useState('home')
 
   const renderPage = () => {
@@ -33,14 +29,21 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-ppmk-light font-inter">
+    <div className="min-h-screen bg-neumorphism-bg">
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       <main>
         {renderPage()}
       </main>
       <Footer />
-
     </div>
+  )
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   )
 }
 
