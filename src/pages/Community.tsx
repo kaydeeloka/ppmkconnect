@@ -35,7 +35,7 @@ const Community = () => {
     {
       id: 1,
       name: 'Ikatan Muslimin Malaysia Korea (ISMA)',
-      icon: Heart,
+      image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAA9lBMVEX///8AAAD+zQcAAAPy8vL39/cdHR0rKyv7+/s3NzcgICAAAAZgUAj/2QcAAAgHBwqIchFYRg33yxK2kw2Dagn/0wnQpxNlVQhIPhCqiQz3xw3GoA2VehV4YwzduBXW1tY4LwrZsRChhBFXV1fnvREUDgggGwhzXRAxKQerq6tlZWXp6elwcHBMTEwXFxe/nhL/3gwbFgkoIQgxMTE/Pz/BwcF8fHyLi4tZSw9SPgpTQxJwYguMcwlBOBFeTQ6egRQmIwlkWBMxJRAiGArQrgUgFxEbGw0/LA/quhNNQwo1MAirhg5rXgoiIAqXghAVCQm1tbWfn5+GObcfAAANQElEQVR4nO2dDXfTuBKGK01hKYqV1Lac2I7TOFXibAs46RYoIR8sdKHZD8r+/z9zJdlObCew3L3sQbmrl3NSW3bO0eMZSaORHI6OjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyM/n169A/oezNVdHx98s319MH3pirr+Bn65vpBL8KH/wZCuGl8My20JGwG1ufF9ugLtzuaEg46r073aPZq5noMBxwLLCw/Ah5gnCazznrf/a86sa6EUbsFu+0Jbpwg8KOWx3t+K3E/vp47nDs/R2HA/c6e+6dzEmpLmFpzWqsvcXngn9I25/MxEbiOLaDo2gkcShqpHbdpDXLasxbaEro0DimCcpVbQa9NgN4GCUGyHFKcXb5KcQNg2Ap4o2JwuLFcpC+hMNlVY2tFsgz4jXRT7BSFkHQzQoIabAUISBTE/e0zGS6IMKrGhAC+MEEu6tguSCjsog0DCLbMWOit7chj6uMu5IVNz5qKv6EDmhICoqM7648MZxF4I3nUYOW21g23x1eBL7FIh8fDzLCDyYpoTojQaAaUCAtFTBkQLayk1DAhxKWzMYvUGXHsjrQmXKlz0NhLlRu+DSKAgT3LGpbdzf0yI0ztcke0ZP3MZSOWIJIO8mt6EworcjZ1+DgniiujAbxZk/K5H+d90NKOVpMtoa5eWjhf4nBClD1nuF8d7wAqIybYUX69jwctoj1hXkFw+KyhTEViv8In+ldetambn9ObcRAVpfp6aV75AacxaytrZu2sRFTpaZD8Vjt7KJOfZ3Yx+OtOmOAxjHtR1szqgWfSrcV1vietTXophTZ7mz8GvQn7TPaiBL3rIODz3dC6VrJkom1eoaEs7gbkAGxIeB6X3bLlL2xc55te1QgpbqDBZJ27Z6oegNaEsHHMvs3bbMeAqV3zUohXjUmYFcIweC0Dd6370g7emG0xm/M6IfFwjZA6IV3lYR1AO9A9aiOVlrfCfVIbDheva15K/LvydeWgGnspRGWrwYDZi7oV6z2Ny4LyxXey6WpMSO3yfBZ87nVqeC2HVEscO6ic+yFoPFqgqBKxgO8BdRZlq4FXjrwBJaeoZVcIh7ivsw15UjGY76EFrjgq8eySDUlkxXVCcByNCWdBNegUhOjGLifgoH9TvoXzaZ1QzJyptoSR41cnDpIQjciiFJzCxmfFRBL6YvyvE0IvSbUl5KfVuipCRLk92rhmVqRctGG15AOpE6J5qC3hICC7XopkpqZXWA5uNz1n3wpUcLBDOLa19dLAR3sJ0fJVnkwTI/qmqcIgc94dL0U9rCkhZ1GtrluXbPNfsozwdJwR3mxSqDs2RAPL15Xw/rOECQveq6LOUv2ZMTtH3UOY6EoYBLWalghRFE/V31jdRFvBJtjZJZxqu7rm1WpaJhQGm43EzCgOxMcQ6GhzZZcQmK6ETi2oLhOKcCzglCJ3APSDXc5P7RIirivh6gs2lGk1y5PLFSI8x8vSs9hD6OlK2PoyIUrE8ND1xYywXb5rD6G246HK02ytAwWhXMZAKhhYpr3ArU3yD4qQvhsidH/fFCdNuTaYE8KGMJLr+Au1hir9FQpCQPmzAb1XZiI8waKVTRjtTiZd6k2sUNb8Ck84emtNYnRlMWz71sRBDmPLqcU8OMU4EOB8iHwc0wUW4cxHrmtME7jzQZeA+ECzwWCNolWsbDga+F008p05mjqO+2bspAmK0nTRDNM5LFIxQjZCpwlR6EPfC7soCQNtCevtya+PkGJ+u1PkHlI7rONUCVVrjGUWo5KqqfQ0WdPUlnD+RUIYnQoyj4uGOSBfHg+1JaytpNVjmngietrRW9GjTrySFfdEbZ6uGeH0i4SDSTc/Ir41+6INA10J488TAoFRJJM0TgiIkCb0gXx29oS0nVvgWrK3REi9VPUi0JM8BA2tza6TXcKFtoQ7C74bQhJO8kYaZ2l/4kwGnyV0tSW0asMFbKO2gV+sLk3zg/k4z93s5mkcbef4cbg/E0XSCGi+r4uSApXwlOwlBPtOVxu2guE+QpJOfFKwp7fFVZpayrA7XnrKtc2XRnFl2aIghDglmz6IF2s3QIgT7SX0fX0J596uDcmovOEUvMqycDPazeqTQOMdtCO7sjNBEoKDy2WAygEbtEQXWydMuL4rMy6Ev1UWCwXhfOJV5vStcjIHxBxyVieM5/rGpS5aV/YhSMKOQyrbojkv71REZGeFtGNTjQkBvHL0DQPep7Wd6nc743taTSTHXb13Qf+Kr7aVJY7lQBUQZo36XgyPlRwX2gHVePbk5pF1Icp5/V0DuKrvxiQu624dlwavkd6EoopJ3tkQSgY7KQvRDusloh1Cv9jA798S3QlROxhl1W3FdDdPs5+wXUwdl8GV9vvahJ/Gyvsii5PfdjNRvrOHcNqzVBq8aWcrkJoTApdLwZDcDWFPrm13N6YcLYaroVzQiDN8fTPC+Q5aas9Row/brH6FZ+flr3w8HEQkjclhEELHHrCQ7GQTlfa2Q/lYeszjebigPSGCG6bmUfsI7c8QEhLwURHyaU0oJu5ABWKynxAaSb0oJ/T5O/qB6E6I+mnsLZd8gTq4u59w2tzbDmnICelOIt0J39gMM2wHC0ALnpK97TCuJeQEIcAVFzMQGHPW0TurHzkM43yBEIbx3R97Yhqb79gwQG08UK/YjLtE753skYcVYR6CrTAPdwjjnSLXdoJlYVia/q41YWbDzb6uzl1wU08S13ZBA1CfpcPN+R+BlWhM6C5EK8RWMWiI+WHAb5c1IlJhpi4PAtgUAe3fzXWeAaN1zPh2c5voaegK30WUbg0Xl5omGX4MeLs2x5cpAW1zbd1BmaXItbk9O0yuCjPxuCDpz2McrvdkE28CbXcMMZYsOiUtnPhX8dlPHIzjdN5edzp9Hvc7nZtk5d0xvjodi8sru9+pKMFM06y+bdV+66L4+Yv8NzAm26LSofxX//kMTVdm4J5S0Y/Qq9FQitKx64Ses6D3VEz36f1sRof0/u0yOaVEXG8CXbjzGaXDXE1CmrNWawbN4fBeyxVSMl5HgzC2J23VZy5jaSDM2M3oxnU8ziwf0cRTP/zhypDA5dLmvU4+ZYRfV7E0ohW/zaaR+hGOpZfKPU8NOZkdCLhedxUwzJOJJcdJNlhyxrKYYI7EsTrE+UbTRYiZt+rJ7/eyXkk/wqHrZ9WXhK4AlO8hjjhms3EeCTCLxxlX4Cv7qmM5nQLRu+COfDFMFFgJ0ZMQAF6znJBIClXPDmauCFLUhXiBKA2z2PX2lKDxrTy0lvK9U4zv5EDjSiOmmhIKjQsbJhKDqi1CntUFtWMP36opPJVmwtm2DRrI+8U8KxUGVUUzeWOsqZci+U59RghdVdG+DEIXq3VGyAbZ7kMZnosJsupfejlhIH1TPaPgQAjnWRNzis37OaHqM2NFmJUXhL8HVo/KmdNSEYL2hGiR95nMHyP6FYQE9QVfxw/U9w6BEDn5WMDsLnwFoVQiBlDGD4aQOqxg9L/KhmNPdDZhZ3woXiqmgcvbAvH0K2zYlgcrgIMhVHP5ZTa8y9dD/orwRl6XGxYPhBC5tx8kJHWzjuMvCVUow5YHROhb+QrTWiJy+CtCaUKsXhA+EEKIGFPxNCCfKRu+Lo34ewhVyIPlevEbvQlBDYMiXulgnE0Q5NAvO1MVbmabGLKYJqoQZt9biTBvrp6RpnEpyCFC1i+lcKfCZ6AyCGV9ouyGs/XdLC7NtkGr9ofDzK6i0MmnHreuM9KQ8H23GB+c05YwXdxBryTgxw+tvOK2/56s87lFOAPU8fLOtrMuYqB5oA4sS0fCBdukWSa+mOBmeRd7TuLtr5f215v8DJ7CpLjfpnMm0wHBDbRkAU7HOnrp+2irGSLLrpM6g2SKyGl7o+Foc9ho0kZxvKSwDO/i1Xsx41g7TquvZzv8HyUabbVAM8L//9+C/unh42+sh9daER4d/wP63kxGygaPjo/lz+NfPr98lJVJycMH2aFyxAfHevnjV+oMIQF4ja6Pj86uRb/x+JMozLqQn54fHf2QHb6Qt4p+WK//JeDrdIaeHR2do6cPJOv5n08Q+lESnl9cCN7LoxP09OLi4vxPdSdCz793df+GztDDowt0LYxzgl6K80/o2fGRZDs6eiqATtBZcedL9BRdfL+K/m2doZ9eoHMBeJlhHT0WTGXC55dCj7ILz9ABtsSzopmdoRPVyi6EmyJ08eTJubTYSdYOz+T1a+HNn75zdf+GBOFj1b6qhEqfJOGTly9fvhAmfSHKP6Hz713f/16C8NFL6ZXHuZc+LLz0k+xlN+1QxHsn1yf5PQcl2dOIFvdUfkhn/RE9fpARCqbLLeFzhJrin+xpD0xqtBCGfCk/nr44V76pCC+b2WhxLnRx9AS9PL48/lM+igOTGvGF5URTVCN+Uw55qmsRnefzYsR/+Cjzz8tDdNOyjs8Ou/5GRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGZf0H3MB9Ql2iBWUAAAAASUVORK5CYII=',
       description: 'Preserving and celebrating Malaysian heritage through cultural events, traditional performances, and community gatherings.',
       members: 1250,
       category: 'spiritual',
@@ -46,7 +46,7 @@ const Community = () => {
     {
       id: 2,
       name: 'Generasi Mahasiswa Islam Korea (GMIK)',
-      icon: BookOpen,
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJAjWrhEqnfQevODv2nLNYwPZ1ZnAhSYVoQg&s',
       description: 'Supporting academic achievement through study groups, mentorship programs, and scholarship opportunities.',
       members: 890,
       category: 'spiritual',
@@ -56,8 +56,19 @@ const Community = () => {
     },
     {
       id: 3,
+      name: 'IKRAM Muda Antarabangsa Korea (IMAN)',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm5M_fTFelWayF_R1VOAKZ46R5aD3LyMQ4fg&s',
+      description: 'Preserving and celebrating Malaysian heritage through cultural events, traditional performances, and community gatherings.',
+      members: 1250,
+      category: 'spiritual',
+      university: 'University of Melbourne',
+      established: '2010',
+      socialLink: '#'
+    },
+    {
+      id: 4,
       name: 'Malaysian Students Dance Crew (MSDC)',
-      icon: Trophy,
+      image: 'https://drive.google.com/file/d/1ZJTytM7wkch0lv2vFZWagEFHBmY2ijtW/view',
       description: 'Bringing together Malaysian athletes and sports enthusiasts for competitions and recreational activities.',
       members: 650,
       category: 'cultural',
@@ -66,10 +77,10 @@ const Community = () => {
       socialLink: '#'
     },
     {
-      id: 4,
+      id: 5,
       name: 'Malaysian Students Football Club (MSFC)',
-      icon: Music,
-      description: 'A platform for Malaysian musicians to collaborate, perform, and share their passion for music.',
+      image: 'https://drive.google.com/file/d/1V6y0ls0yb3-lSRrw9SU5VFiRhGlz1zhv/view?usp=sharing',
+      description: '',
       members: 420,
       category: 'sport',
       university: 'Monash University',
@@ -77,9 +88,9 @@ const Community = () => {
       socialLink: '#'
     },
     {
-      id: 5,
+      id: 6,
       name: 'Malaysian Students Recreational Club (MSRC)',
-      icon: Camera,
+      image: 'https://scontent-hkg1-2.cdninstagram.com/v/t51.2885-19/487444639_1834317417363988_3501062875632808909_n.jpg?stp=dst-jpg_s320x320_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43ODUuYzIifQ&_nc_ht=scontent-hkg1-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QHyYc0uks-sjtiu3xfSQWLdHZ1zCRaHygubkYdQsKhzeGdDkkzRV3gVz2tCoG5wGW0&_nc_ohc=ycDWuDilFa8Q7kNvwFipyXw&_nc_gid=45mMfB24aDhIyxCPMI6BDQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfVQvI6jC1m7PuzY-JvMuIBCyhWMPCREKQk-rZRqHYeN6w&oe=68AC0C46&_nc_sid=8b3546',
       description: 'Capturing memories and showcasing Malaysian culture through the lens of talented photographers.',
       members: 380,
       category: 'sport',
@@ -88,9 +99,9 @@ const Community = () => {
       socialLink: '#'
     },
     {
-      id: 6,
+      id: 7,
       name: 'Malaysia Korea Badminton Association (MKBA)',
-      icon: Star,
+      image: '',
       description: 'Developing leadership skills and creating opportunities for Malaysian students to excel in their careers.',
       members: 720,
       category: 'sport',
@@ -324,7 +335,7 @@ const Community = () => {
     },
     {
       id: 21,
-      name: 'Yonsei University (Songdo Campus)',
+      name: 'Yonsei University (Songdo)',
       image: 'https://i.namu.wiki/i/xyIvAo1RjZoOSVDEyoOPzJvCs5Ixk4iBAXu_Q59-S36s-Z9FcOvQJR3Y6FMfJV2-dq6wgqJQTxQ1edqWuW9ItB4aLCYgCgCNDOGmGStFKGqQ2xoT7CKgnMskhUFG0GIieNvBkov2rH905Xq6OVMYWw.webp',
       description: 'Premier research university in the nation\'s capital with strong Malaysian alumni network and cultural societies.',
       location: 'Canberra, Australia',
@@ -385,27 +396,27 @@ const Community = () => {
           </section>
 
           {/* Search and Filter Section */}
-          <section className="bg-white/50 backdrop-blur-sm rounded-2xl border border-secondary-100 p-6 shadow-xl">
+          <section className="bg-white/50 backdrop-blur-sm rounded-2xl border border-secondary-100 p-5 shadow-xl">
             <div className="flex flex-col md:flex-row gap-4">
               {/* Search Bar */}
               <div className="flex-1 relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-500 w-5 h-5" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-600 w-5 h-5" />
                 <input
                   type="text"
                   placeholder="Search clubs, universities, or communities..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-2 bg-secondary-25 border-1 border-secondary-100 rounded-2xl text-primary-600 placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-secondary-1500 focus:border-secondary-200 transition-all duration-100 text-lg font-medium shadow-inner"
+                  className="w-full pl-12 pr-4 py-2 bg-secondary-25 border-1 border-secondary-10 rounded-2xl text-primary-600 placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-secondary-1500 focus:border-secondary-200 transition-all duration-100 text-lg font-small shadow-inner"
                 />
               </div>
 
               {/* Filter Dropdown */}
               <div className="relative">
-                <Filter className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                <Filter className="absolute left-5 top-1/2 transform -translate-y-1/2 text-primary-600 w-4 h-4" />
                 <select
                   value={filterType}
                   onChange={(e) => setFilterType(e.target.value)}
-                  className="pl-10 pr-5 py-2 bg-secondary-25 border-1 border-secondary-100 rounded-2xl text-primary-400 focus:outline-none focus:ring-2 focus:ring-secondary-150 focus:border-secondary-200 transition-all duration-100 appearance-none cursor-pointer min-w-[150px] text-lg font-medium shadow-inner"
+                  className="pl-12 pr-2 py-2 bg-secondary-10 border-1 border-secondary-100 rounded-3xl text-primary-600 focus:outline-none focus:ring-2 focus:ring-secondary-150 focus:border-secondary-200 transition-all duration-100 appearance-none cursor-pointer min-w-[150px] text-lg font-small shadow-inner"
                 >
                   <option value="all">All Categories</option>
                   <option value="clubs">Clubs Only</option>
@@ -447,33 +458,44 @@ const Community = () => {
 
           {/* Clubs Section */}
           <section>
-            <div className="text-center mb-12">
+            <div className="text-center mb-10">
               <h2 className="text-3xl font-bold text-gray-800 mb-4">Our Clubs</h2>
               <p className="text-xl text-primary-600 max-w-3xl mx-auto font-medium leading-relaxed">
                 Discover vibrant communities where Malaysian students come together to pursue shared interests and build lasting friendships.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 mx-6 py-3 text-white rounded-xl md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 mx-3 py-3 text-white rounded-xl md:grid-cols-3 lg:grid-cols-3 gap-5">
               {filteredClubs.map((club) => (
                 <div
                   key={club.id}
                   className="group bg-white/90 backdrop-blur-sm rounded-3xl border border-secondary-200 p-8 shadow-xl hover:shadow-2xl hover:bg-white transition-all duration-500 hover:-translate-y-2"
                 >
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <club.icon className="w-8 h-8 text-white" />
-                    </div>
-                    <button className="p-2 backdrop-blur-md bg-white/20 rounded-lg hover:bg-white/30 transition-colors">
-                      <ExternalLink className="w-4 h-4 text-primary-700" />
-                    </button>
+                  <div className="p-4">
+                    {/* Club Header with Icon-sized Image */}
+                    <div className="flex items-start space-x-4 mb-4">
+                      <div className="relative flex-shrink-0">
+                        <img
+                          src={club.image}
+                          alt={club.name}
+                          className="w-14 h-14  rounded-2xl object-cover shadow-lg group-hover:scale-105 transition-transform duration-300"
+                        />
+                    
                   </div>
-
-                  <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
-                    {club.name}
-                  </h3>
                   
-                  <p className="text-gray-600 mb-4 line-clamp-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="text-xl font-bold text-primary-600 group-hover:text-primary-600 transition-colors leading-tight">
+                        {club.name}
+                      </h3>
+                      <button className="p-1 bg-secondary-100 rounded-xl hover:bg-secondary-300 transition-colors shadow-md flex-shrink-0">
+                        <ExternalLink className="w-4 h-4 text-primary-600" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                  
+                  <p className="text-gray-700 mb-4 line-clamp-4">
                     {club.description}
                   </p>
 
@@ -493,13 +515,15 @@ const Community = () => {
                       <Users className="w-4 h-4 text-gray-500" />
                       <span className="text-gray-700 font-medium">{club.members.toLocaleString()} members</span>
                     </div>
-                    <button className="px-4 py-2 bg-primary-700 text-white rounded-xl hover:bg-primary-800 duration-300 font-semibold shadow-lg hover:shadow-xl">
+                    <button className="px-2 py-3 bg-primary-700 text-white rounded-xl hover:bg-primary-800 duration-300 font-semibold shadow-lg hover:shadow-xl">
                       Join Club
                     </button>
                   </div>
                 </div>
-              ))}
+              </div>
+                ))}
             </div>
+            
 
             {filteredClubs.length === 0 && (
               <div className="text-center py-12">
@@ -517,7 +541,7 @@ const Community = () => {
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-800 mb-4">Universities & Communities</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                Explore top universities where Malaysian students thrive, with strong support networks and vibrant communities.
+                Explore Korean universities where Malaysian students thrive, with strong support networks and vibrant communities.
               </p>
             </div>
 
@@ -616,7 +640,6 @@ const Community = () => {
             )}
           </section>
         </main>
-
 
       </div>
     
