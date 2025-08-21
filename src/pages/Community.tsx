@@ -68,7 +68,7 @@ const Community = () => {
     {
       id: 4,
       name: 'Malaysian Students Dance Crew (MSDC)',
-      image: 'https://drive.google.com/file/d/1ZJTytM7wkch0lv2vFZWagEFHBmY2ijtW/view',
+      image: 'https://www.shutterstock.com/image-vector/couple-dancing-night-club-party-600nw-2502128457.jpg',
       description: 'Bringing together Malaysian athletes and sports enthusiasts for competitions and recreational activities.',
       members: 650,
       category: 'cultural',
@@ -79,8 +79,8 @@ const Community = () => {
     {
       id: 5,
       name: 'Malaysian Students Football Club (MSFC)',
-      image: 'https://drive.google.com/file/d/1V6y0ls0yb3-lSRrw9SU5VFiRhGlz1zhv/view?usp=sharing',
-      description: '',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWYf5IMmgVS0OFoTZfrZwDjIsf3orTinmOzw&s',
+      description: 'bringing the football in korea',
       members: 420,
       category: 'sport',
       university: 'Monash University',
@@ -90,7 +90,7 @@ const Community = () => {
     {
       id: 6,
       name: 'Malaysian Students Recreational Club (MSRC)',
-      image: 'https://scontent-hkg1-2.cdninstagram.com/v/t51.2885-19/487444639_1834317417363988_3501062875632808909_n.jpg?stp=dst-jpg_s320x320_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43ODUuYzIifQ&_nc_ht=scontent-hkg1-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QHyYc0uks-sjtiu3xfSQWLdHZ1zCRaHygubkYdQsKhzeGdDkkzRV3gVz2tCoG5wGW0&_nc_ohc=ycDWuDilFa8Q7kNvwFipyXw&_nc_gid=45mMfB24aDhIyxCPMI6BDQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfVQvI6jC1m7PuzY-JvMuIBCyhWMPCREKQk-rZRqHYeN6w&oe=68AC0C46&_nc_sid=8b3546',
+      image: 'https://static.vecteezy.com/system/resources/previews/035/333/389/non_2x/outdoor-activity-illustration-with-relaxing-on-a-picnic-leisure-activities-at-weekend-and-active-recreation-in-flat-cartoon-background-design-vector.jpg',
       description: 'Capturing memories and showcasing Malaysian culture through the lens of talented photographers.',
       members: 380,
       category: 'sport',
@@ -101,7 +101,7 @@ const Community = () => {
     {
       id: 7,
       name: 'Malaysia Korea Badminton Association (MKBA)',
-      image: '',
+      image: 'https://www.racquetpoint.com/cdn/shop/articles/badminton-the-ultimate-guide-to-the-racquet-sport-460186.jpg?v=1741601376&width=2048',
       description: 'Developing leadership skills and creating opportunities for Malaysian students to excel in their careers.',
       members: 720,
       category: 'sport',
@@ -122,40 +122,40 @@ const Community = () => {
       malaysianStudents: 1,
       established: '1973',
       programs: ['Engineering', 'Medical Science', 'Business', 'IT and Computing', 'Biotechnology(BT)', 'Nanotechnology(NT)', 'International Studies'],
-      ranking: '#9 in Korea '
+      ranking: '#9 in South Korea '
     },
     {
       id: 2,
       name: 'Dongyang Mirae University',
       image: 'https://lh3.googleusercontent.com/gps-cs-s/AC9h4nr6Uo5nDwyahMWzQgp6_3BIKbkYi8rJIA1kikQmAleS7aqnSnbPXws-oD_5zcqOfqiKvPMW6YCTToFzA6Gbf10zWgR3wT-ivf9Yt_3AATY-wUl3gVcmKjK8f_FdtmXDTMMKf57h=s1360-w1360-h1020-rw',
-      description: 'Historic university offering world-class education with vibrant Malaysian student societies and cultural programs.',
-      location: 'Sydney, Australia',
+      description: 'The institution offers a broad range of programs—from engineering and robotics to computer science, business, and creative technologies—designed to prepare students for industry success.',
+      location: 'Guro-gu, Seoul',
       malaysianStudents: 18,
-      established: '1850',
-      programs: ['Law', 'Engineering', 'Medicine', 'Architecture'],
-      ranking: '#2 in Australia'
+      established: '1965',
+      programs: ['Mechanical Engineering', 'Electrical & Electronic Communication Engineering', 'Computer Engeneering', 'Life & Enviromental Engineering', 'Business'],
+      ranking:'#157 in South Korea',
     },
     {
       id: 3,
       name: 'Ewha Woman University',
       image: 'https://cascadingkorea.wordpress.com/wp-content/uploads/2019/03/ewh_3363-1-1.jpg',
-      description: 'Innovation-focused university known for its strong engineering and business programs with active Malaysian community.',
-      location: 'Sydney, Australia',
+      description: 'Established in 1886 by American missionary Mary F. Scranton, Ewha was the first institution dedicated to women higher education in Asia. Located in Seodaemun-gu, Seoul, it is one of South Korea most prestigious universities and a globally recognized leader in women education',
+      location: 'Seodaemun, Seoul',
       malaysianStudents: 7,
-      established: '1949',
-      programs: ['Engineering', 'Business', 'Computer Science', 'Design'],
-      ranking: '#3 in Australia'
+      established: '1886',
+      programs: ['Engineering', 'Business', 'Liberal Arts', 'Social Sciences', 'Natural Sciences', 'Medicine'],
+      ranking: '#16 in South Korea'
     },
     {
       id: 4,
       name: 'Gachon University',
-      image: 'https://lh3.googleusercontent.com/proxy/NJe9RIbmU1nufEsnBpCQG_Xwc_irJodE0VB-tgt1_g_fsNd3Ik_c1rW8dP2srT30NcQ20v3_369IyU0247PTlXvacsDyhswe34NCOISb9PYmfIPhMTxjgUO1aIdVv2GtgmidXkr_HEgPbdbaJBV9acOdVQ',
+      image: 'https://www.gachon.ac.kr/CrossEditor/binary/images/000113/C_%EA%B0%80%EC%B2%9C%EB%8C%80%ED%95%99%EA%B5%90_%EC%A0%84%EA%B2%BD%EC%82%AC%EC%A7%84_240524.jpg',
       description: 'Global university with strong ties to Malaysia, offering diverse programs and extensive student support services.',
       location: 'Melbourne, Australia',
       malaysianStudents: 1,
-      established: '1958',
+      established: '2012',
       programs: ['Medicine', 'Engineering', 'Business', 'Pharmacy'],
-      ranking: '#4 in Australia'
+      ranking: '#30 in South Korea'
     },
     {
       id: 5,
@@ -327,7 +327,7 @@ const Community = () => {
       name: 'Yonsei University',
       image: 'https://brocku.ca/international/learning/wp-content/uploads/sites/266/yonsei-main.jpg?x63201',
       description: 'Premier research university in the nation\'s capital with strong Malaysian alumni network and cultural societies.',
-      location: 'Canberra, Australia',
+      location: 'Sinchon, Seoul',
       malaysianStudents: 19,
       established: '1946',
       programs: ['Politics', 'Economics', 'Science', 'Arts'],
@@ -335,10 +335,10 @@ const Community = () => {
     },
     {
       id: 21,
-      name: 'Yonsei University (Songdo)',
+      name: 'Yonsei University (International Campus)',
       image: 'https://i.namu.wiki/i/xyIvAo1RjZoOSVDEyoOPzJvCs5Ixk4iBAXu_Q59-S36s-Z9FcOvQJR3Y6FMfJV2-dq6wgqJQTxQ1edqWuW9ItB4aLCYgCgCNDOGmGStFKGqQ2xoT7CKgnMskhUFG0GIieNvBkov2rH905Xq6OVMYWw.webp',
       description: 'Premier research university in the nation\'s capital with strong Malaysian alumni network and cultural societies.',
-      location: 'Canberra, Australia',
+      location: 'Songdo, Incheon',
       malaysianStudents: 12,
       established: '1946',
       programs: ['Politics', 'Economics', 'Science', 'Arts'],
