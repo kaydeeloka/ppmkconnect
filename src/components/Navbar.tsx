@@ -1,13 +1,24 @@
-import React from 'react'
-import {
-  Menu,
-  X,
-  Users,
-  FileText,
-  Calendar,
+import React, { useState, useRef, useEffect } from 'react'
+import { 
+  Menu, 
+  X, 
+  Home, 
   Info,
-  MessageCircle,
+  Calendar, 
+  Users, 
+  LogIn, 
+  LogOut,
+  User
 } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
+import AuthModal from './AuthModal'
+
+interface NavItem {
+  label: string
+  page: string
+  icon: React.ReactNode
+  protected?: boolean
+}
 
 interface NavbarProps {
   currentPage: string
@@ -15,92 +26,250 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const [showAuthModal, setShowAuthModal] = useState(false)
+  const [showUserDropdown, setShowUserDropdown] = useState(false)
+  const [redirectToCommunity, setRedirectToCommunity] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+  const { user, signOut, loading } = useAuth()
 
-  const navItems = [
-    { id: 'home', label: 'Home', icon: Users },
-    { id: 'about', label: 'About Us', icon: Info },
-    { id: 'activities', label: 'Activities', icon: Calendar },
-    { id: 'information', label: 'Information', icon: FileText },
-    { id: 'community', label: 'Community', icon: MessageCircle },
+  const navItems: NavItem[] = [
+    { label: 'Home', page: 'home', icon: <Home size={18} /> },
+    { label: 'About Us', page: 'about', icon: <Info size={18} /> },
+    { label: 'Activities', page: 'activities', icon: <Calendar size={18} /> },
+    { label: 'Information', page: 'information', icon: <Info size={18} /> },
+    { label: 'Community', page: 'community', icon: <Users size={18} />, protected: true },
   ]
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowUserDropdown(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  useEffect(() => {
+    // If user just logged in and was trying to access community, redirect
+    if (user && redirectToCommunity) {
+      setRedirectToCommunity(false)
+      setCurrentPage('community')
+    }
+  }, [user, redirectToCommunity, setCurrentPage])
+
+  const handleSignOut = async () => {
+    try {
+      await signOut()
+      setShowUserDropdown(false)
+      // Redirect to home after logout if on community page
+      if (currentPage === 'community') {
+        setCurrentPage('home')
+      }
+    } catch (error) {
+      console.error('Error signing out:', error)
+    }
+  }
+
+  const handleNavClick = (item: NavItem) => {
+    if (item.protected && !user) {
+      setRedirectToCommunity(true)
+      setShowAuthModal(true)
+    } else {
+      setCurrentPage(item.page)
+      setIsOpen(false)
+    }
+  }
+
   return (
-<header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/10 border-b border-ppmk-dark/20">      
-<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center backdrop-blur-sm">
-              <Users className="w-6 h-6 text-black" />
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-neumorphism-bg/95 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <div className="flex items-center">
+              <div className="flex-shrink-0 flex items-center cursor-pointer" onClick={() => setCurrentPage('home')}>
+                <div className="p-3 rounded-2xl shadow-neumorphism">
+                  <Users className="h-8 w-8 text-neumorphism-primary" />
+                </div>
+                <div className="ml-3">
+                  <span className="text-xl font-bold text-neumorphism-text">PPMK</span>
+                  <p className="text-xs text-neumorphism-text-light">Persatuan Pelajar Malaysia Korea</p>
+                </div>
+              </div>
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-primary">PPMK</h1>
-              <p className="text-xs text-primary/70">
-                Persatuan Pelajar Malaysia Korea
-              </p>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-2">
+                {navItems.map((item) => (
+                  <button
+                    key={item.label}
+                    onClick={() => handleNavClick(item)}
+                    className={`group px-4 py-3 rounded-2xl transition-all duration-300 flex items-center space-x-2 ${
+                      currentPage === item.page 
+                        ? 'shadow-neumorphism-inset text-neumorphism-primary' 
+                        : 'shadow-neumorphism hover:shadow-neumorphism-inset text-neumorphism-text hover:text-neumorphism-primary'
+                    }`}
+                  >
+                    <span className="transition-transform group-hover:scale-110">
+                      {item.icon}
+                    </span>
+                    <span className="font-medium">{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Auth Section */}
+            <div className="hidden md:flex items-center space-x-4">
+              {loading ? (
+                <div className="px-6 py-3 rounded-2xl shadow-neumorphism-inset">
+                  <div className="animate-pulse h-4 w-20 bg-neumorphism-dark rounded"></div>
+                </div>
+              ) : user ? (
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={() => setShowUserDropdown(!showUserDropdown)}
+                    className="flex items-center space-x-3 px-5 py-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-inset transition-all duration-300"
+                  >
+                    <div className="p-2 rounded-xl shadow-neumorphism-sm">
+                      <User size={20} className="text-neumorphism-primary" />
+                    </div>
+                    <span className="font-medium text-neumorphism-text">
+                      {user.fullName || user.email.split('@')[0]}
+                    </span>
+                  </button>
+
+                  {/* Simplified User Dropdown */}
+                  {showUserDropdown && (
+                    <div className="absolute right-0 mt-3 w-64 rounded-2xl shadow-neumorphism-hover bg-white p-4 space-y-3 border border-[#003e58]">
+                      {/* User Info */}
+                      <div className="p-3 rounded-xl shadow-neumorphism-inset bg-white">
+                        <p className="text-sm font-semibold text-[#003e58] uppercase">
+                          {user.fullName || user.email.split('@')[0]}
+                        </p>
+                        {user.university && (
+                          <p className="text-sm text-gray-600 uppercase mt-1">
+                            {user.university}
+                          </p>
+                        )}
+                        {user.batch && (
+                          <p className="text-sm text-gray-600 uppercase">
+                            Batch {user.batch}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Logout Button */}
+                      <button
+                        onClick={handleSignOut}
+                        className="w-full py-2 px-4 rounded-xl font-semibold text-white 
+                                  bg-[#003e58]
+                                  hover:opacity-90 transition"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button
+                  onClick={() => setShowAuthModal(true)}
+                  className="flex items-center space-x-2 px-6 py-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-hover transition-all duration-300 text-neumorphism-primary"
+                >
+                  <LogIn size={20} />
+                  <span className="font-semibold">Login</span>
+                </button>
+              )}
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-inset transition-all duration-300 text-neumorphism-text"
+              >
+                {isOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
             </div>
           </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => {
-              const Icon = item.icon
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setCurrentPage(item.id)}
-                  className={`flex items-center space-x-2 px-2 py-2 rounded-lg transition-all duration-200 backdrop-blur-sm ${
-                    currentPage === item.id
-                      ? 'bg-ppmk-dark/100 text-ppmk-accent'
-                      : 'text-primary/80 hover:text-primary'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  <span className="font-medium">{item.label}</span>
-                </button>
-              )
-            })}
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg bg-white/20 backdrop-blur-sm text-primary hover:bg-white/30 transition-colors"
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
 
         {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-white/20">
-            <nav className="flex flex-col space-y-2">
-              {navItems.map((item) => {
-                const Icon = item.icon
-                return (
+        {isOpen && (
+          <div className="md:hidden bg-neumorphism-bg border-t border-neumorphism-dark/20">
+            <div className="px-2 pt-2 pb-3 space-y-2 sm:px-3">
+              {navItems.map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => handleNavClick(item)}
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-2xl transition-all duration-300 ${
+                    currentPage === item.page 
+                      ? 'shadow-neumorphism-inset text-neumorphism-primary' 
+                      : 'shadow-neumorphism hover:shadow-neumorphism-inset text-neumorphism-text'
+                  }`}
+                >
+                  {item.icon}
+                  <span className="font-medium">{item.label}</span>
+                </button>
+              ))}
+              
+              {/* Mobile Auth Section */}
+              <div className="pt-3 border-t border-neumorphism-dark/20">
+                {loading ? (
+                  <div className="px-4 py-3 rounded-2xl shadow-neumorphism-inset">
+                    <div className="animate-pulse h-4 w-full bg-neumorphism-dark rounded"></div>
+                  </div>
+                ) : user ? (
+                  <div className="space-y-2">
+                    <div className="px-4 py-3 rounded-2xl shadow-neumorphism-inset">
+                      <p className="text-sm font-semibold text-neumorphism-text">
+                        {user.fullName || user.email}
+                      </p>
+                      {user.university && (
+                        <p className="text-xs text-neumorphism-text-light mt-1">
+                          {user.university} • Batch {user.batch}
+                        </p>
+                      )}
+                    </div>
+                    <button
+                      onClick={handleSignOut}
+                      className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-inset transition-all duration-300 text-neumorphism-accent"
+                    >
+                      <LogOut size={18} />
+                      <span className="font-medium">Logout</span>
+                    </button>
+                  </div>
+                ) : (
                   <button
-                    key={item.id}
                     onClick={() => {
-                      setCurrentPage(item.id)
-                      setIsMenuOpen(false)
+                      setShowAuthModal(true)
+                      setIsOpen(false)
                     }}
-                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 backdrop-blur-sm ${
-                      currentPage === item.id
-                      ? 'bg-ppmk-dark/100 text-ppmk-accent'
-                        : 'text-primary/80 hover:text-primary'
-                    }`}
+                    className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-hover transition-all duration-300 text-neumorphism-primary"
                   >
-                    <Icon className="w-5 h-5" />
-                    <span className="font-medium">{item.label}</span>
+                    <LogIn size={20} />
+                    <span className="font-semibold">Login</span>
                   </button>
-                )
-              })}
-            </nav>
+                )}
+              </div>
+            </div>
           </div>
         )}
-      </div>
-    </header>
+      </nav>
+
+      {/* Auth Modal */}
+      <AuthModal 
+        isOpen={showAuthModal} 
+        onClose={() => {
+          setShowAuthModal(false)
+          setRedirectToCommunity(false)
+        }} 
+      />
+    </>
   )
 }
 

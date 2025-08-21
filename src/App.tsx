@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { AuthProvider } from './contexts/AuthContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -7,7 +8,7 @@ import Activities from './pages/Activities'
 import Information from './pages/Information'
 import Community from './pages/Community'
 
-function App() {
+function AppContent() {
   const [currentPage, setCurrentPage] = useState('home')
 
   const renderPage = () => {
@@ -28,14 +29,21 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-ppmk-light font-inter">
+    <div className="min-h-screen bg-neumorphism-bg">
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       <main>
         {renderPage()}
       </main>
       <Footer />
-
     </div>
+  )
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   )
 }
 
