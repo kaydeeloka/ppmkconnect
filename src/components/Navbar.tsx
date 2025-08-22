@@ -31,6 +31,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [showUserDropdown, setShowUserDropdown] = useState(false)
   const [redirectToCommunity, setRedirectToCommunity] = useState(false)
+  const [redirectToMeetup, setRedirectToMeetup] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const { user, signOut, loading } = useAuth()
 
@@ -54,12 +55,18 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
   }, [])
 
   useEffect(() => {
-    // If user just logged in and was trying to access community, redirect
-    if (user && redirectToCommunity) {
-      setRedirectToCommunity(false)
-      setCurrentPage('community')
-    }
-  }, [user, redirectToCommunity, setCurrentPage])
+  // If user just logged in and was trying to access community, redirect
+  if (user && redirectToCommunity) {
+    setRedirectToCommunity(false)
+    setCurrentPage('community')
+  }
+
+  // If user just logged in and was trying to access meetup, redirect
+  if (user && redirectToMeetup) {
+    setRedirectToMeetup(false)
+    setCurrentPage('meetup')
+  }
+}, [user, redirectToCommunity, redirectToMeetup, setCurrentPage])
 
   const handleSignOut = async () => {
     try {
@@ -145,36 +152,55 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                   </button>
 
                   {/* Simplified User Dropdown */}
-                  {showUserDropdown && (
-                    <div className="absolute right-0 mt-3 w-64 rounded-2xl shadow-neumorphism-hover bg-white p-4 space-y-3 border border-[#003e58]">
-                      {/* User Info */}
-                      <div className="p-3 rounded-xl shadow-neumorphism-inset bg-white">
-                        <p className="text-sm font-semibold text-[#003e58] uppercase">
-                          {user.fullName || user.email.split('@')[0]}
-                        </p>
-                        {user.university && (
-                          <p className="text-sm text-gray-600 uppercase mt-1">
-                            {user.university}
-                          </p>
-                        )}
-                        {user.batch && (
-                          <p className="text-sm text-gray-600 uppercase">
-                            {user.batch}
-                          </p>
-                        )}
-                      </div>
+{showUserDropdown && (
+  <div className="absolute right-0 mt-3 w-72 rounded-2xl shadow-neumorphism-hover bg-white p-4 space-y-3 border border-[#003e58]">
+    
+    {/* User Info with Icon on Left */}
+    <div className="flex items-center space-x-3 p-3 rounded-xl shadow-neumorphism-inset bg-white">
+      {/* Profile Icon */}
+      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-100">
+        <User size={28} className="text-[#003e58]" />
+      </div>
+      
+      {/* User Info Text */}
+      <div className="flex flex-col">
+        <p className="text-sm font-semibold text-[#003e58] uppercase">
+          {user.fullName || user.email.split('@')[0]}
+        </p>
+        {user.university && (
+          <p className="text-sm text-gray-600 uppercase">{user.university}</p>
+        )}
+        {user.batch && (
+          <p className="text-sm text-gray-600 uppercase">{user.batch}</p>
+        )}
+      </div>
+    </div>
 
-                      {/* Logout Button */}
-                      <button
-                        onClick={handleSignOut}
-                        className="w-full py-2 px-4 rounded-xl font-semibold text-white 
-                                  bg-[#003e58]
-                                  hover:opacity-90 transition"
-                      >
-                        Logout
-                      </button>
-                    </div>
-                  )}
+    {/* Meetup Button */}
+    <button
+      onClick={() => {
+        setCurrentPage('meetup')
+        setShowUserDropdown(false)
+      }}
+      className="w-full py-2 px-4 rounded-xl font-semibold text-[#003e58] 
+                bg-gray-100 hover:bg-gray-200 transition flex items-center justify-center space-x-2"
+    >
+      <HeartHandshake size={18} />
+      <span>Meetup</span>
+    </button>
+
+    {/* Logout Button */}
+    <button
+      onClick={handleSignOut}
+      className="w-full py-2 px-4 rounded-xl font-semibold text-white 
+                bg-[#003e58] hover:opacity-90 transition"
+    >
+      Logout
+    </button>
+  </div>
+)}
+
+
                 </div>
               ) : (
                 <button
