@@ -1,15 +1,13 @@
 import React, { useRef, useState } from "react";
 import { Calendar as CalIcon, MapPin, Users, ExternalLink, Images } from "lucide-react";
 
-/* ========= Small helpers to support Instagram/Facebook ========= */
-
 const isDirectImageUrl = (url: string) =>
   /\.(jpg|jpeg|png|webp|gif)(\?|#|$)/i.test(url || "");
 
 const toInstagramEmbed = (url: string) => {
   try {
     const u = new URL(url);
-    const parts = u.pathname.split("/").filter(Boolean); // ["p", "{code}"]
+    const parts = u.pathname.split("/").filter(Boolean); 
     const type = parts[0];
     const code = parts[1];
     if (["p", "reel", "tv"].includes(type) && code) {
@@ -31,8 +29,8 @@ const smartCtaLabel = (url?: string, fallback = "View Gallery") => {
 const Media: React.FC<{
   url?: string;
   fit?: "cover" | "contain";
-  className?: string; // applied to wrapper
-  imgClassName?: string; // extra classes on <img>
+  className?: string; 
+  imgClassName?: string; 
 }> = ({ url, fit = "cover", className, imgClassName }) => {
   if (!url) {
     return <div className={["absolute inset-0 bg-ppmk-dark/10", className].join(" ")} />;
@@ -62,9 +60,9 @@ const Media: React.FC<{
         src={toInstagramEmbed(url)}
         className={["absolute inset-0 w-full h-full", className || ""].join(" ")}
         loading="lazy"
-        allowTransparency
         frameBorder={0}
         referrerPolicy="no-referrer-when-downgrade"
+        scrolling="no"
       />
     );
   }
@@ -94,7 +92,6 @@ type EventLite = {
   galleryUrl?: string;     
   ctaLabel?: string;       
 };
-
 
 const PAST_EVENTS: EventLite[] = [
   { title: "CNY Celebration", date: "21/01/2025", image: "https://www.instagram.com/p/DFE6UXET3O7/?hl=en", galleryUrl: "https://www.instagram.com/p/DFbtxdJTM-m/?hl=en&img_index=1" },
@@ -149,9 +146,8 @@ const YearlyActivitiesSection: React.FC = () => {
   const scrollByStep = (dir: 1 | -1) => {
     const el = scrollerRef.current;
     if (!el) return;
-    // Scroll by ~one card width + gap
     const firstCard = el.querySelector<HTMLElement>("[data-month-card]");
-    const gap = 24; // matches gap-6
+    const gap = 24; 
     const step = firstCard ? firstCard.offsetWidth + gap : el.clientWidth * 0.9;
     el.scrollBy({ left: step * dir, behavior: "smooth" });
   };
@@ -242,8 +238,6 @@ const YearlyActivitiesSection: React.FC = () => {
   );
 };
 
-/* ========= Shared bits ========= */
-
 const EventMeta: React.FC<{ event: EventLite }> = ({ event }) => (
   <div className="mt-2 flex flex-wrap gap-4 text-sm text-ppmk-dark/80">
     <span className="inline-flex items-center gap-1">
@@ -279,10 +273,8 @@ const CTAButton: React.FC<{ href?: string; label: string }> = ({ href, label }) 
   );
 };
 
-/* ========= Gallery (left column) ========= */
-
+/* Gallery  */
 const Gallery: React.FC = () => {
-  // Put Instagram/Facebook post URLs or direct image URLs here
   const images = [
     "https://www.instagram.com/p/DERUVMYz7RS/?hl=en",
     "https://www.instagram.com/p/DFh4l9ZTHrO/?hl=en",
@@ -293,61 +285,113 @@ const Gallery: React.FC = () => {
     "https://www.instagram.com/p/DLjQx6TzKz2/?hl=en",
     "https://www.instagram.com/p/DMy6D34T4Yu/?hl=en",
   ];
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const nextImage = () => setCurrentIndex((i) => (i + 1) % images.length);
   const prevImage = () => setCurrentIndex((i) => (i - 1 + images.length) % images.length);
 
   const current = images[currentIndex];
+  const isIG = /instagram\.com\/(p|reel|tv)\//i.test(current);
+  const isDirectImg = /\.(jpg|jpeg|png|webp|gif)(\?|#|$)/i.test(current);
+
+  const iframeHeights = "h-[760px] md:h-[860px] lg:h-[940px]";
 
   return (
-    <section className="bg-white rounded-xl shadow-lg p-8 border border-ppmk-dark/10 h-full flex flex-col min-h-[420px]">
-      <h2 className="text-2xl font-bold text-ppmk-dark mb-6 text-center">Calendar</h2>
-      <div className="relative w-full h-80 md:h-96 lg:h-[28rem] rounded-xl overflow-hidden bg-white">
-        <Media url={current} fit="contain" />
+    <section className="bg-white rounded-2xl shadow-lg p-8 border border-ppmk-dark/10 h-full flex flex-col">
+      {}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-ppmk-dark rounded-lg flex items-center justify-center">
+            <Images className="w-6 h-6 text-white" />
+          </div>
+          <h2 className="text-2xl font-bold text-ppmk-dark">Calendar</h2>
+        </div>
+
+        {}
+        <div className="hidden md:flex items-center gap-2">
+          <button
+            onClick={prevImage}
+            className="px-3 py-2 rounded-lg border border-ppmk-dark/10 bg-white hover:bg-ppmk-light"
+            aria-label="Previous"
+          >
+            ◀
+          </button>
+          <button
+            onClick={nextImage}
+            className="px-3 py-2 rounded-lg border border-ppmk-dark/10 bg-white hover:bg-ppmk-light"
+            aria-label="Next"
+          >
+            ▶
+          </button>
+        </div>
+      </div>
+
+      {}
+      <div className="relative w-full rounded-xl bg-white">
+        {isIG && !isDirectImg ? (
+          <div className={`w-full ${iframeHeights} rounded-xl overflow-hidden pointer-events-none`}>
+            <iframe
+              key={current}
+              src={toInstagramEmbed(current)}
+              className="w-full h-full"
+              loading="lazy"
+              frameBorder={0}
+              scrolling="no"
+              referrerPolicy="no-referrer-when-downgrade"
+              allow="encrypted-media; picture-in-picture; web-share"
+            />
+          </div>
+        ) : (
+          <div className="relative w-full h-80 md:h-96 lg:h-[28rem] rounded-xl overflow-hidden bg-ppmk-dark/5">
+            <img
+              src={current}
+              alt={`Gallery ${currentIndex + 1}`}
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        )}
+      </div>
+
+      {}
+      <div className="mt-4 flex md:hidden justify-center gap-3">
         <button
           onClick={prevImage}
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-md"
+          className="px-4 py-2 rounded-lg border border-ppmk-dark/10 bg-white"
           aria-label="Previous"
         >
           ◀
         </button>
         <button
           onClick={nextImage}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-md"
+          className="px-4 py-2 rounded-lg border border-ppmk-dark/10 bg-white"
           aria-label="Next"
         >
           ▶
         </button>
       </div>
-
-      {/* Optional: show "Open original post" when it's an embed */}
-      {!isDirectImageUrl(current) && (
-        <div className="text-center mt-3">
-          <a
-            href={current}
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm text-ppmk-dark/70 underline hover:text-ppmk-dark"
-          >
-            Open original post
-          </a>
-        </div>
-      )}
     </section>
   );
 };
 
-/* ========= Past Events: swipeable carousel (right column) ========= */
 
+/* Past Events */
 const PastEventsCarousel: React.FC<{ events: EventLite[] }> = ({ events }) => {
   const scrollerRef = useRef<HTMLDivElement>(null);
+
+  const pages = React.useMemo(() => {
+    const out: EventLite[][] = [];
+    for (let i = 0; i < events.length; i += 4) out.push(events.slice(i, i + 4));
+    return out;
+  }, [events]);
 
   const scrollByStep = (dir: 1 | -1) => {
     const el = scrollerRef.current;
     if (!el) return;
-    const firstCard = el.querySelector<HTMLElement>("[data-card]");
-    const gap = 24; // matches gap-6
-    const step = firstCard ? firstCard.offsetWidth + gap : el.clientWidth * 0.9;
+    const firstPage = el.querySelector<HTMLElement>("[data-page]");
+    const gap = 24; 
+    const step = firstPage ? firstPage.offsetWidth + gap : el.clientWidth;
     el.scrollBy({ left: step * dir, behavior: "smooth" });
   };
 
@@ -361,7 +405,7 @@ const PastEventsCarousel: React.FC<{ events: EventLite[] }> = ({ events }) => {
           <h2 className="text-2xl font-bold text-ppmk-dark">Past Events</h2>
         </div>
 
-        {/* Prev / Next (desktop) */}
+        {}
         <div className="hidden md:flex items-center gap-2">
           <button
             onClick={() => scrollByStep(-1)}
@@ -380,38 +424,48 @@ const PastEventsCarousel: React.FC<{ events: EventLite[] }> = ({ events }) => {
         </div>
       </div>
 
-      {/* Horizontal scroller */}
+      {}
       <div
         ref={scrollerRef}
         className="
           grid grid-flow-col gap-6 overflow-x-auto snap-x snap-mandatory
-          auto-cols-[75%] sm:auto-cols-[50%] lg:auto-cols-[33%]
-          scroll-smooth touch-pan-x
+          auto-cols-[100%] scroll-smooth touch-pan-x
           [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
         "
       >
-        {events.map((ev, idx) => (
-          <article
-            key={idx}
-            data-card
-            className="snap-start border border-ppmk-dark/10 rounded-xl overflow-hidden bg-white hover:shadow-md transition-shadow"
-          >
-            <div className="relative w-full h-56 md:h-64 bg-ppmk-dark/10">
-              <Media url={ev.image} fit="cover" />
-            </div>
+        {pages.map((group, pageIdx) => (
+          <div key={pageIdx} data-page className="snap-start w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {group.map((ev, idx) => (
+                <article
+                  key={idx}
+                  data-card
+                  className="border border-ppmk-dark/10 rounded-xl overflow-hidden bg-white hover:shadow-md transition-shadow"
+                >
+                  <div className="relative w-full h-56 md:h-64 bg-ppmk-dark/10">
+                    <Media url={ev.image} fit="cover" />
+                  </div>
+                  <div className="p-4">
+                    <div className="font-semibold text-ppmk-dark line-clamp-2">{ev.title}</div>
+                    <EventMeta event={ev} />
+                    <div className="mt-3">
+                      <CTAButton href={ev.galleryUrl} label={ev.ctaLabel ?? "View Gallery"} />
+                    </div>
+                  </div>
+                </article>
+              ))}
 
-            <div className="p-4">
-              <div className="font-semibold text-ppmk-dark line-clamp-2">{ev.title}</div>
-              <EventMeta event={ev} />
-              <div className="mt-3">
-                <CTAButton href={ev.galleryUrl} label={ev.ctaLabel ?? "View Gallery"} />
-              </div>
+              {}
+              {group.length < 4 &&
+                Array.from({ length: 4 - group.length }).map((_, i) => (
+                  <div key={`ph-${i}`} className="hidden md:block" />
+                ))}
             </div>
-          </article>
+          </div>
         ))}
       </div>
 
-      {/* Mobile controls */}
+      {}
       <div className="mt-4 flex md:hidden justify-center gap-3">
         <button
           onClick={() => scrollByStep(-1)}
@@ -432,109 +486,154 @@ const PastEventsCarousel: React.FC<{ events: EventLite[] }> = ({ events }) => {
   );
 };
 
-/* ========= Upcoming Events (full width, bottom) ========= */
-
+/* Upcoming Events */
 const UpcomingEventsSection: React.FC<{ events: EventLite[] }> = ({ events }) => {
-  const [featured, ...rest] = events;
+  const scrollerRef = useRef<HTMLDivElement>(null);
 
-  const isFeaturedImg = featured?.image ? isDirectImageUrl(featured.image) : false;
+  const isEmbedUrl = (u?: string) =>
+    !!u && !isDirectImageUrl(u) && /(instagram\.com|facebook\.com)/i.test(u || "");
+
+  const EMBED_H = "h-[520px] md:h-[620px]"; 
+  const IMG_H = "h-56 md:h-64";            
+
+  const scrollByStep = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const firstCard = el.querySelector<HTMLElement>("[data-ue-card]");
+    const gap = 24; 
+    const step = firstCard ? firstCard.offsetWidth + gap : el.clientWidth * 0.9;
+    el.scrollBy({ left: step * dir, behavior: "smooth" });
+  };
 
   return (
-    <section className="rounded-2xl p-8 border border-ppmk-dark/10 bg-white ">
-      <h2 className="text-2xl font-bold text-ppmk-dark text-center">Upcoming Events</h2>
-      <p className="text-ppmk-dark/70 text-center mt-1">Join exciting activities across our community.</p>
+    <section className="rounded-2xl p-8 border border-ppmk-dark/10 bg-white relative h-full">
+      {}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-ppmk-dark rounded-lg flex items-center justify-center">
+            <Images className="w-6 h-6 text-white" />
+          </div>
+          <h2 className="text-2xl font-bold text-ppmk-dark">Upcoming Events</h2>
+        </div>
 
-      <div className="mt-6 grid lg:grid-cols-12 gap-6">
-        {/* Featured */}
-        <div className="lg:col-span-7">
-          {featured ? (
-            <div className="overflow-hidden rounded-xl border border-ppmk-dark/10 bg-white">
-              {/* media */}
-              <div className="aspect-video relative bg-ppmk-dark/10">
-                <Media url={featured.image} fit="cover" />
-                {/* Only overlay text if it's a real image; if it's an embed, we place text below instead */}
-                {isFeaturedImg && (
-                  <>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                    <div className="absolute left-4 right-4 bottom-4 text-white">
-                      <span className="inline-block text-xs font-semibold bg-black/60 px-2 py-1 rounded-full mb-2">
-                        Featured
-                      </span>
-                      <h3 className="text-xl md:text-2xl font-bold leading-tight">{featured.title}</h3>
-                      <div className="text-white/90">
-                        <EventMeta event={featured} />
-                      </div>
-                      <div className="mt-3">
-                        <CTAButton href={featured.registerUrl} label="Register Now" />
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
+        <div className="hidden md:flex items-center gap-2">
+          <button
+            onClick={() => scrollByStep(-1)}
+            className="px-3 py-2 rounded-lg border border-ppmk-dark/10 bg-white hover:bg-ppmk-light"
+            aria-label="Previous"
+          >
+            ◀
+          </button>
+          <button
+            onClick={() => scrollByStep(1)}
+            className="px-3 py-2 rounded-lg border border-ppmk-dark/10 bg-white hover:bg-ppmk-light"
+            aria-label="Next"
+          >
+            ▶
+          </button>
+        </div>
+      </div>
 
-              {/* If embed, show caption/CTA below instead of overlay */}
-              {!isFeaturedImg && (
-                <div className="p-4">
-                  <h3 className="text-lg font-bold text-ppmk-dark">{featured.title}</h3>
-                  <EventMeta event={featured} />
-                  <div className="mt-3">
-                    <CTAButton href={featured.registerUrl} label="Register Now" />
-                  </div>
+      {}
+      <div
+        ref={scrollerRef}
+        className="
+          grid grid-flow-col gap-6 overflow-x-auto snap-x snap-mandatory
+          auto-cols-[80%] sm:auto-cols-[55%] md:auto-cols-[40%] lg:auto-cols-[33%]
+          scroll-smooth touch-pan-x
+          [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
+        "
+      >
+        {events.map((ev, idx) => {
+          const embed = isEmbedUrl(ev.image);
+          const isIG = /instagram\.com/i.test(ev.image || "");
+          const src = embed
+            ? (isIG ? toInstagramEmbed(ev.image!) : toFacebookEmbed(ev.image!))
+            : undefined;
+
+          return (
+            <article
+              key={idx}
+              data-ue-card
+              className="snap-start border border-ppmk-dark/10 rounded-xl overflow-hidden bg-white hover:shadow-md transition-shadow"
+            >
+              {/* Media */}
+              {embed ? (
+                <div className={`w-full ${EMBED_H} rounded-t-xl overflow-hidden pointer-events-none bg-ppmk-dark/5`}>
+                  <iframe
+                    key={src}
+                    src={src}
+                    className="w-full h-full"
+                    loading="lazy"
+                    frameBorder={0}
+                    scrolling="no"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allow="encrypted-media; picture-in-picture; web-share"
+                  />
+                </div>
+              ) : (
+                <div className={`relative w-full ${IMG_H} bg-ppmk-dark/10`}>
+                  <img
+                    src={ev.image || ""}
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
               )}
-            </div>
-          ) : (
-            <div className="rounded-xl border border-ppmk-dark/10 bg-white p-6 text-ppmk-dark/60">No upcoming events.</div>
-          )}
-        </div>
 
-        {/* 3 side cards */}
-        <div className="lg:col-span-5 grid grid-cols-1 gap-4">
-          {rest.slice(0, 3).map((ev, idx) => (
-            <div
-              key={idx}
-              className="rounded-xl border border-ppmk-dark/10 bg-white overflow-hidden hover:shadow-md transition-shadow"
-            >
-              <div className="flex gap-4">
-                <div className="w-32 h-24 shrink-0 overflow-hidden relative bg-ppmk-dark/10">
-                  <Media url={ev.image} fit="cover" />
-                </div>
-                <div className="py-3 pr-3 flex-1">
-                  <div className="font-semibold text-ppmk-dark line-clamp-2">{ev.title}</div>
-                  <EventMeta event={ev} />
-                  <div className="mt-2">
-                    <CTAButton href={ev.registerUrl} label="Register Now" />
-                  </div>
+              {}
+              <div className="p-4">
+                <div className="font-semibold text-ppmk-dark line-clamp-2">{ev.title}</div>
+                <EventMeta event={ev} />
+                <div className="mt-3">
+                  <CTAButton href={ev.registerUrl} label="Register Now" />
                 </div>
               </div>
-            </div>
-          ))}
-          {rest.length === 0 && (
-            <div className="rounded-xl border border-ppmk-dark/10 bg-white p-6 text-ppmk-dark/60">More events will appear here.</div>
-          )}
-        </div>
+            </article>
+          );
+        })}
+      </div>
+
+      {}
+      <div className="mt-4 flex md:hidden justify-center gap-3">
+        <button
+          onClick={() => scrollByStep(-1)}
+          className="px-4 py-2 rounded-lg border border-ppmk-dark/10 bg-white"
+          aria-label="Previous"
+        >
+          ◀
+        </button>
+        <button
+          onClick={() => scrollByStep(1)}
+          className="px-4 py-2 rounded-lg border border-ppmk-dark/10 bg-white"
+          aria-label="Next"
+        >
+          ▶
+        </button>
       </div>
     </section>
   );
 };
 
-/* ========= Page ========= */
+/* Page */
 
 const Activities: React.FC = () => {
   return (
-    <div className="pt-8 pb-12 bg-ppmk-light min-h-screen">
+    <div className="pt-28 pb-12 bg-ppmk-light min-h-screen">
       <div className="max-w-7xl mx-auto px-4">
 
-        {/* Top: Yearly */}
+        {}
         <YearlyActivitiesSection />
 
-        {/* Middle: Gallery (left) + Past (right) */}
+        {}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10 items-stretch">
           <Gallery />
           <PastEventsCarousel events={PAST_EVENTS} />
         </div>
 
-        {/* Bottom: Upcoming */}
+        {}
         <div className="mt-10 ">
           <UpcomingEventsSection events={UPCOMING_EVENTS} />
         </div>
