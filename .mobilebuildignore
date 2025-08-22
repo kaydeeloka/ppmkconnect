@@ -1,0 +1,12 @@
+# Mobile build ignore file
+node_modules/
+.git/
+.env.local
+.env.development
+.env.test
+*.log
+.DS_Store
+coverage/
+.nyc_output/
+dist/
+build/
