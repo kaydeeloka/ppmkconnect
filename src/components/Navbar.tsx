@@ -8,7 +8,8 @@ import {
   Users, 
   LogIn, 
   LogOut,
-  User
+  User,
+  HeartHandshake
 } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import AuthModal from './AuthModal'
@@ -37,7 +38,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
     { label: 'Home', page: 'home', icon: <Home size={18} /> },
     { label: 'About Us', page: 'about', icon: <Info size={18} /> },
     { label: 'Activities', page: 'activities', icon: <Calendar size={18} /> },
-    { label: 'Information', page: 'information', icon: <Info size={18} /> },
+    { label: 'Meetup', page: 'meetup', icon: <HeartHandshake size={18} />, protected: true },
     { label: 'Community', page: 'community', icon: <Users size={18} />, protected: true },
   ]
 

@@ -244,36 +244,53 @@ const About = () => {
           </div>
         </div>
 
-        {/* Timeline */}
-        <div className="mb-16">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-ppmk-dark mb-4">Our Journey</h2>
-            <p className="text-xl text-ppmk-dark/70">Key milestones in PPMK's history</p>
-          </div>
+        {/* Horizontal Timeline */}
+<div className="mb-16">
+  <div className="text-center mb-12">
+    <h2 className="text-4xl font-bold text-[#003e58] mb-4">Our Journey</h2>
+    <p className="text-xl text-[#003e58]/70">Key milestones in PPMK's history</p>
+  </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8 border border-ppmk-dark/10">
-            <div className="space-y-8">
-              {achievements.map((achievement, index) => (
-                <div key={index} className="flex items-start space-x-6">
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 bg-ppmk-dark rounded-full flex items-center justify-center">
-                      <span className="text-ppmk-accent font-bold text-sm">{achievement.year}</span>
-                    </div>
-                  </div>
-                  <div className="flex-grow">
-                    <h3 className="text-xl font-bold text-ppmk-dark mb-2">{achievement.title}</h3>
-                    <p className="text-ppmk-dark/70">{achievement.description}</p>
-                  </div>
-                  {index === 0 && (
-                    <div className="flex-shrink-0">
-                      <Star className="w-6 h-6 text-ppmk-accent fill-current" />
-                    </div>
-                  )}
-                </div>
-              ))}
+  <div className="relative bg-[#e5e7e2] rounded-xl shadow-lg p-8 border border-[#003e58]/20 overflow-x-auto">
+    {/* Timeline line */}
+    <div className="absolute top-1/2 left-0 right-0 h-1 bg-[#003e58]"></div>
+
+    <div className="flex justify-between items-center relative space-x-12 min-w-[900px]">
+      {achievements.map((achievement, index) => {
+        const colors = ["#003e58", "#fdf9b4", "#003e58", "#fdf9b4", "#003e58", "#fdf9b4"];
+        const color = colors[index % colors.length];
+
+        return (
+          <div key={index} className="flex flex-col items-center relative w-36">
+            {/* Upper or lower placement */}
+            <div className={`text-center mb-4 ${index % 2 === 0 ? "order-1" : "order-2"}`}>
+  <h3 className="text-lg font-bold text-[#003e58]">{achievement.title}</h3>
+  
+  {/* Line goes between title and description */}
+  <div
+    className={`h-1 w-12 mx-auto my-2 rounded-full`}
+    style={{ backgroundColor: color }}
+  ></div>
+  
+  <p className="text-sm text-[#003e58]/70">{achievement.description}</p>
+</div>
+
+            {/* Year circle */}
+            <div
+              className="w-12 h-12 rounded-full flex items-center justify-center font-bold z-10"
+              style={{
+                backgroundColor: index % 2 === 0 ? "#003e58" : "#fdf9b4",
+                color: index % 2 === 0 ? "#fdf9b4" : "#003e58",
+              }}
+            >
+              {achievement.year}
             </div>
           </div>
-        </div>
+        );
+      })}
+    </div>
+  </div>
+</div>
 
         {/* Embassy Team */}
         <div className="mb-16">

@@ -7,9 +7,14 @@ import About from './pages/About'
 import Activities from './pages/Activities'
 import Information from './pages/Information'
 import Community from './pages/Community'
+import Meetup  from './pages/meetup'
+import AuthModal from './components/AuthModal'
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState('home')
+  const [showAuthModal, setShowAuthModal] = useState(false)
+  const [redirectToCommunity, setRedirectToCommunity] = useState(false)
+  const [redirectToMeetup, setRedirectToMeetup] = useState(false)
 
   const renderPage = () => {
     switch (currentPage) {
@@ -19,8 +24,8 @@ function AppContent() {
         return <About />
       case 'activities':
         return <Activities />
-      case 'information':
-        return <Information />
+      case 'meetup':
+        return <Meetup />
       case 'community':
         return <Community />
       default:
@@ -34,12 +39,29 @@ function AppContent() {
       <main>
         {renderPage()}
       </main>
-      <Footer />
+      <Footer 
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        setShowAuthModal={setShowAuthModal} 
+        setRedirectToCommunity={
+          function (redirect: boolean): void {
+          throw new Error('Function not implemented.')
+        } } 
+        setRedirectToMeetup={function (redirect: boolean): void {
+          throw new Error('Function not implemented.')
+        } }      />
+
+      <AuthModal 
+        isOpen={showAuthModal} 
+        onClose={() => setShowAuthModal(false)} 
+      />
     </div>
+
   )
 }
 
 function App() {
+
   return (
     <AuthProvider>
       <AppContent />

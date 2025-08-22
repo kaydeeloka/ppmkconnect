@@ -70,16 +70,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }
 
-  const signIn = async (email: string, password: string) => {
-    try {
-      setAuthState(prev => ({ ...prev, loading: true, error: null }))
-      const { error } = await supabase.auth.signInWithPassword({ email, password })
-      if (error) throw error
-    } catch (error: any) {
-      setAuthState(prev => ({ ...prev, loading: false, error: error.message }))
-      throw error
+const signIn = async (email: string, password: string) => {
+  try {
+    setAuthState(prev => ({ ...prev, loading: true, error: null }))
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    if (error) {
+      let errorMessage = "An unexpected error occurred"
+
+      if (error.message.includes("Invalid login credentials")) {
+        errorMessage = "The email or password is incorrect"
+      } else if (error.message.includes("Email not confirmed")) {
+        errorMessage = "Please confirm your email before logging in"
+      }
+
+      throw new Error(errorMessage)
+
     }
+  } catch (error: any) {
+    setAuthState(prev => ({ ...prev, loading: false, error: error.message }))
+    throw error
   }
+}
+
 
   const signUp = async (email: string, password: string, metadata: any) => {
     try {

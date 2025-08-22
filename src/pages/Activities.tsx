@@ -342,7 +342,7 @@ const UpcomingEventsSection: React.FC<{ events: EventLite[] }> = ({ events }) =>
 
 const Activities: React.FC = () => {
   return (
-    <div className="pt-8 pb-12 bg-ppmk-light min-h-screen">
+    <div className="pt-14 pb-12 bg-ppmk-light min-h-screen">
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Top: Yearly */}

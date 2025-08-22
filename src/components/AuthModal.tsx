@@ -72,7 +72,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <input
                 type="text"
                 name="fullName"
-                placeholder="Full Name"
+                placeholder="Username"
                 value={formData.fullName}
                 onChange={handleInputChange}
                 className="w-full pl-12 pr-4 py-3 rounded-2xl shadow-neumorphism-inset bg-neumorphism-bg border-2 border-black text-neumorphism-text placeholder-neumorphism-text-light focus:outline-none focus:ring-2 focus:ring-neumorphism-primary/30"
@@ -165,7 +165,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           )}
 
           {error && (
-            <div className="p-3 rounded-xl shadow-neumorphism-inset bg-neumorphism-accent/10 border-2 border-black text-neumorphism-accent text-sm">
+            <div className="text-[red] bg-neumorphism-accent/10 text-xs">
               {error}
             </div>
           )}

@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
 import { Search, Filter, Users, Calendar, MapPin, ExternalLink, Heart, Star, Globe, Building, Music, BookOpen, Trophy, Camera, GraduationCap } from 'lucide-react'
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Navigation, Pagination } from "swiper/modules"
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
+
 
 const Community = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -464,73 +470,87 @@ const Community = () => {
                 Discover vibrant communities where Malaysian students come together to pursue shared interests and build lasting friendships.
               </p>
             </div>
-            
-            <div className="grid grid-cols-2 mx-3 py-3 text-white rounded-xl md:grid-cols-3 lg:grid-cols-3 gap-5">
+
+            <Swiper
+              modules={[Navigation, Pagination]}
+              spaceBetween={24}
+              slidesPerView={1}
+              navigation
+              pagination={{ clickable: true }}
+              loop={true}
+              allowTouchMove={true}   // 👈 enables swipe
+              simulateTouch={true}    // 👈 ensures trackpad gestures are recognized as touch
+              touchEventsTarget="container"
+              cssMode={false}         // 👈 important: disable CSS mode so swipe works
+              breakpoints={{
+                640: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+              }}
+              className="px-6"
+            >
               {filteredClubs.map((club) => (
-                <div
-                  key={club.id}
-                  className="group bg-white/90 backdrop-blur-sm rounded-3xl border border-secondary-200 p-8 shadow-xl hover:shadow-2xl hover:bg-white transition-all duration-500 hover:-translate-y-2"
-                >
-                  <div className="p-4">
-                    {/* Club Header with Icon-sized Image */}
+                <SwiperSlide key={club.id}>
+                  <div className="group bg-white/90 backdrop-blur-sm rounded-3xl border border-secondary-200 p-8 shadow-xl hover:shadow-2xl hover:bg-white transition-all duration-500 hover:-translate-y-2">
+                    {/* Club Header */}
                     <div className="flex items-start space-x-4 mb-4">
-                      <div className="relative flex-shrink-0">
-                        <img
-                          src={club.image}
-                          alt={club.name}
-                          className="w-14 h-14  rounded-2xl object-cover shadow-lg group-hover:scale-105 transition-transform duration-300"
-                        />
-                    
-                  </div>
-                  
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-xl font-bold text-primary-600 group-hover:text-primary-600 transition-colors leading-tight">
-                        {club.name}
-                      </h3>
-                      <button className="p-1 bg-secondary-100 rounded-xl hover:bg-secondary-300 transition-colors shadow-md flex-shrink-0">
-                        <ExternalLink className="w-4 h-4 text-primary-600" />
+                      <img
+                        src={club.image}
+                        alt={club.name}
+                        className="w-14 h-14 rounded-2xl object-cover shadow-lg group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-2">
+                          <h3 className="text-xl font-bold text-primary-600 leading-tight">
+                            {club.name}
+                          </h3>
+                          <button className="p-1 bg-secondary-100 rounded-xl hover:bg-secondary-300 transition-colors shadow-md flex-shrink-0">
+                            <ExternalLink className="w-4 h-4 text-primary-600" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-gray-700 mb-4 line-clamp-4">{club.description}</p>
+
+                    {/* Info */}
+                    <div className="space-y-2 mb-4">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-500">University:</span>
+                        <span className="text-gray-700 font-medium">{club.university}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-500">Established:</span>
+                        <span className="text-gray-700 font-medium">{club.established}</span>
+                      </div>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="flex items-center justify-between pt-4 border-t border-white/20">
+                      <div className="flex items-center space-x-2">
+                        <Users className="w-4 h-4 text-gray-500" />
+                        <span className="text-gray-700 font-medium">
+                          {club.members.toLocaleString()} members
+                        </span>
+                      </div>
+                      <button className="px-2 py-3 bg-primary-700 text-white rounded-xl hover:bg-primary-800 duration-300 font-semibold shadow-lg hover:shadow-xl">
+                        Join Club
                       </button>
                     </div>
                   </div>
-                </div>
-                  
-                  <p className="text-gray-700 mb-4 line-clamp-4">
-                    {club.description}
-                  </p>
-
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-500">University:</span>
-                      <span className="text-gray-700 font-medium">{club.university}</span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-500">Established:</span>
-                      <span className="text-gray-700 font-medium">{club.established}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-4 border-t border-white/20">
-                    <div className="flex items-center space-x-2">
-                      <Users className="w-4 h-4 text-gray-500" />
-                      <span className="text-gray-700 font-medium">{club.members.toLocaleString()} members</span>
-                    </div>
-                    <button className="px-2 py-3 bg-primary-700 text-white rounded-xl hover:bg-primary-800 duration-300 font-semibold shadow-lg hover:shadow-xl">
-                      Join Club
-                    </button>
-                  </div>
-                </div>
-              </div>
-                ))}
-            </div>
-            
+                </SwiperSlide>
+              ))}
+            </Swiper>
 
             {filteredClubs.length === 0 && (
               <div className="text-center py-12">
                 <div className="backdrop-blur-md bg-white/10 rounded-2xl border border-white/20 p-8">
                   <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold text-gray-700 mb-2">No clubs found</h3>
-                  <p className="text-gray-600">Try adjusting your search terms or filters to find more clubs.</p>
+                  <p className="text-gray-600">
+                    Try adjusting your search terms or filters to find more clubs.
+                  </p>
                 </div>
               </div>
             )}

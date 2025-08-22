@@ -3,7 +3,7 @@ export interface User {
   email: string
   university?: string
   batch?: string
-  fullName?: string
+  fullname?: string
   createdAt?: string
 }
 
@@ -19,7 +19,7 @@ export interface LoginCredentials {
 }
 
 export interface SignUpCredentials extends LoginCredentials {
-  fullName: string
+  fullname: string
   university: string
   batch: string
 }
