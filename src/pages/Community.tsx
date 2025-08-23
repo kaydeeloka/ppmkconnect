@@ -264,9 +264,9 @@ const Community = () => {
     },
     {
       id: 14,
-      name: 'Language Education Institute',
+      name: 'Seoul National University (LEI)',
       image: 'https://lei.snu.ac.kr/img/mobile/kr/lei/content/main_img2.jpg',
-      description: 'A premier institution in South Korea, offering comprehensive Korean language programs to international students and foreigners residing in Korea.',
+      description: 'A premier Language Education Institution in South Korea, offering comprehensive Korean language programs to international students and foreigners residing in Korea.',
       location: 'Gwanak, Seoul',
       malaysianStudents: 43,
       established: '1969',
@@ -387,17 +387,10 @@ const Community = () => {
    
 
   return (
-    <div className="pt-8 pb-12 bg-ppmk-light min-h-screen">
-      {/* Background Pattern */}
-      <div className="fixed inset-0 opacity-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-secondary-100/30 via-white/20 to-secondary-200/30"></div>
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-secondary-300/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary-300/20 rounded-full blur-3xl"></div>
-      </div>
-
+    <div className="pt-8 pb-12 bg-gray-50 min-h-screen">
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 space-y-16">
           {/* Hero Section */}
-          <section className="text-center mb-16 mt-20">
+          <section className="text-center mb-16 pt-8">
             <div className="bg-white rounded-xl shadow-lg p-12 border border-ppmk-dark/10">
               <h2 className="text-5xl font-bold text-ppmk-dark mb-6">
                 PPMK Community
@@ -407,6 +400,22 @@ const Community = () => {
             different interests, academic pursuits, and regional connections across South Korea.
 
               </p>
+          {/* Stats Section */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+              {stats.map((stat, index) => (
+                <div
+                  key={index}
+                  className="group backdrop-blur-md bg-white/10 rounded-2xl border border-white/20 p-8 shadow-xl hover:shadow-2xl hover:bg-white/15 transition-all duration-300 text-center"
+                >
+                  <div className={`w-16 h-16 bg-gradient-to-br ${stat.gradient} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                    <stat.icon className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="text-4xl font-bold text-gray-800 mb-2">{stat.value}</div>
+                  <div className="text-xl font-semibold text-gray-700 mb-2">{stat.label}</div>
+                  <div className="text-gray-600">{stat.description}</div>
+                </div>
+              ))}
+            </div>
             </div>
           </section>
 
@@ -441,32 +450,6 @@ const Community = () => {
                   <option value="spiritual">Spiritual Clubs</option>
                 </select>
               </div>
-            </div>
-          </section>
-
-          {/* Stats Section */}
-          <section>
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">Community Impact</h2>
-              <p className="text-xl text-primary-600 max-w-3xl mx-auto font-medium leading-relaxed">
-                See how our community has grown and the connections we've fostered across South Korea.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className="group backdrop-blur-md bg-white/10 rounded-2xl border border-white/20 p-8 shadow-xl hover:shadow-2xl hover:bg-white/15 transition-all duration-300 text-center"
-                >
-                  <div className={`w-16 h-16 bg-gradient-to-br ${stat.gradient} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                    <stat.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="text-4xl font-bold text-gray-800 mb-2">{stat.value}</div>
-                  <div className="text-xl font-semibold text-gray-700 mb-2">{stat.label}</div>
-                  <div className="text-gray-600">{stat.description}</div>
-                </div>
-              ))}
             </div>
           </section>
 

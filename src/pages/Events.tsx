@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Calendar as CalIcon, MapPin, Users, ExternalLink, Images } from "lucide-react";
+import { Calendar as CalIcon, MapPin, Users, ExternalLink, Images,Calendar } from "lucide-react";
 
 const isDirectImageUrl = (url: string) =>
   /\.(jpg|jpeg|png|webp|gif)(\?|#|$)/i.test(url || "");
@@ -110,6 +110,8 @@ const PAST_EVENTS: EventLite[] = [
 const UPCOMING_EVENTS: EventLite[] = [
   { title: "Sambutan Hari Kemerdekaan", date: "30/08/2025", image: "https://www.instagram.com/p/DM7RvSfzsIK/?hl=en", registerUrl: "https://drive.google.com/drive/folders/10JGq0jKtPDPJ5cCPjqE0YGS2ZJoQfi-G" },
   { title: "Larian Madani", date: "01/10/2025", image: "https://www.instagram.com/p/DMWxPyATLw2/?hl=en&img_index=1", registerUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdrottrY76FmIwlUhINhHULmnVwTmlB24Ckfn5OYccFoj1XbA/closedform?pli=1" },
+  { title: "Malam Anugerah Dirgahayu 2025", date: "00/11/2025", image: "https://www.instagram.com/p/DLQ-5tQzNV4/?utm_source=ig_web_copy_link&igsh=enVvNzNidzg4NDdj", registerUrl: " " },
+
 ];
 
 type MonthBlock = { month: string; items: { title: string; date: string; imageUrl?: string }[] };
@@ -157,7 +159,7 @@ const YearlyActivitiesSection: React.FC = () => {
       {/* Header + controls */}
       <div className="flex items-center justify-between">
         <div className="text-center mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-ppmk-dark">12 Months of Activities</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-ppmk-dark">Yearly Events</h2>
           <p className="text-ppmk-dark/70 mt-2">
             We organize a variety of events throughout the year to foster community, culture, and connection among
             Malaysian students in Korea.
@@ -302,7 +304,7 @@ const Gallery: React.FC = () => {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-ppmk-dark rounded-lg flex items-center justify-center">
-            <Images className="w-6 h-6 text-white" />
+            <Calendar className="w-6 h-6 text-white" />
           </div>
           <h2 className="text-2xl font-bold text-ppmk-dark">Calendar</h2>
         </div>
@@ -619,9 +621,9 @@ const UpcomingEventsSection: React.FC<{ events: EventLite[] }> = ({ events }) =>
 
 /* Page */
 
-const Activities: React.FC = () => {
+const Events: React.FC = () => {
   return (
-    <div className="pt-28 pb-12 bg-ppmk-light min-h-screen">
+    <div className="pt-8 pb-12 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4">
 
         {}
@@ -642,4 +644,4 @@ const Activities: React.FC = () => {
   );
 };
 
-export default Activities;
+export default Events;

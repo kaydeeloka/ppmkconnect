@@ -1,12 +1,12 @@
 import React from 'react'
-import { Users, Target, Award, Network, Mail, Phone, BookOpen, Handshake, Star } from 'lucide-react'
+import { Users, Calendar, Award, Network,GraduationCap,Clock } from 'lucide-react'
 
 const About = () => {
   const stats = [
     { number: '500+', label: 'Active Members', color: 'bg-blue-500', icon: Users },
-    { number: '15+', label: 'Universities', color: 'bg-green-500', icon: Users },
-    { number: '50+', label: 'Events Organized', color: 'bg-purple-500', icon: Users },
-    { number: '8+', label: 'Years Active', color: 'bg-orange-500', icon: Users },
+    { number: '15+', label: 'Universities', color: 'bg-green-500', icon: GraduationCap },
+    { number: '50+', label: 'Events Organized', color: 'bg-purple-500', icon: Calendar },
+    { number: '40', label: 'Years Active', color: 'bg-orange-500', icon: Clock },
   ]
 
   const aims = [
@@ -27,113 +27,86 @@ const About = () => {
     },
   ]
 
-  const journeyEvents = [
+    const journeyEvents = [
     {
-      year: '2016',
+      year: '1984',
       title: 'PPMK Establishment',
-      description: 'Founded with 50 pioneer members across 5 universities',
+      description: 'Founded to serve Malaysian students in Korea under the Look East Policy.',
     },
     {
-      year: '2018',
+      year: '2010',
       title: 'First Cultural Festival',
-      description: 'Organized the inaugural Malaysia-Korea Cultural Exchange',
+      description: 'Organized the inaugural Malaysia-Korea Cultural Exchange event.',
     },
     {
       year: '2020',
       title: 'Digital Transformation',
-      description: 'Launched online platforms during pandemic to maintain connections',
+      description: 'Launched online platforms to maintain connections during the pandemic.',
     },
     {
       year: '2022',
-      title: 'Scholarship Program',
-      description: 'Established partnership for Malaysian student scholarships',
+      title: 'Career Symposium',
+      description: 'Established SIKMA, a career program for graduating students.',
     },
     {
       year: '2024',
       title: '500+ Members',
-      description: 'Reached milestone of 500+ active members across 15+ universities',
+      description: 'Reached a milestone of over 500 active members across South Korea.',
     },
   ]
 
   const embassy = [
     {
       name: 'En. Shahril Nizam Bin Idris',
-      position: 'President',
-      email: 'president@ppmkconnect.org',
-      phone: '+82-10-1234-5678',
+      position: 'COUNSELLOR (EDUCATION AND TRAINING)',
+      email: 'shahril.idris@jpa.gov.my',
+      phone: '+82-10-3494-6738',
       location:'Embassy Malaysia',
-      image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
+      image: 'https://ppmkonline.com/wp-content/uploads/2025/01/en-shahril-4.png?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
     },
     {
       name: 'En. Mohd Zul Faisal Bin Mohamad Zin',
-      position: 'Vice President',
-      email: 'vicepresident@ppmkconnect.org',
-      phone: '+82-10-2345-6789',
+      position: 'COUNSELLOR (MARA STUDENTs’ AFFAIRS)',
+      email: 'mzfaisal@mara.gov.my ',
+      phone: '+82-10-4346-1401',
       location:'Embassy Malaysia',
-      image: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
+      image: 'https://ppmkonline.com/wp-content/uploads/2025/01/en-zul-3.png?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
     },
   ]
 
   const committee = [
     {
-      name: 'Muhammad Azdy Shaharudin Bin Zakaria',
-      position: 'Secretary',
-      email: 'secretary@ppmkconnect.org',
-      phone: '+82-10-3456-7890',
+      name: 'Muhammad Aisy Iskandar Bin Zakaria',
+      position: 'President',
+      email: 'aisyzakaria31@gmail.com',
+      phone: '+82-10-2850-1231',
       location:'Sunkyungkwan University',
-      image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
+      image: 'https://ppmkonline.com/wp-content/uploads/2025/01/AISY-819x1024.jpg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
     },
     {
-      name: 'Nurul Hamimah Binti Sapri Iskandar',
-      position: 'Treasurer',
-      email: 'treasurer@ppmkconnect.org',
+      name: 'Nurul Namirah Binti Saiful Idzhar',
+      position: 'Vice President',
+      email: 'nurulnamirah02@gmail.comg',
+      phone: '+82-10-2183-2679',
       location:'Sunkyungkwan University',
-      image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
+      image: 'https://ppmkonline.com/wp-content/uploads/2025/01/NAMI-819x1024.jpg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
     },
     {
       name: 'Farah Syazana Binti Mohd Khidzir',
       position: 'General Secretary',
-      email: 'general@ppmkconnect.org',
-      phone: '+82-10-5678-9012',
+      email: 'fsyazana02@gmail.com',
+      phone: '+82-10-3347-2212',
       location:'Yonsei University',
-      image: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
+      image: 'https://ppmkonline.com/wp-content/uploads/2025/01/FARAH-819x1024.jpg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
     },
     {
       name: 'Ummi Aisyah Binti Somri',
-      position: 'Communications Director',
-      email: 'communications@ppmkconnect.org',
-      phone: '+82-10-6789-0123',
+      position: 'Honorary Treasurer',
+      email: 'aisyahromzi22@gmail.com',
+      phone: '+82-10-9833-5922',
       location:'Korea University',
-      image: 'https://images.pexels.com/photos/1181424/pexels-photo-1181424.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
+      image: 'https://ppmkonline.com/wp-content/uploads/2025/01/AISYAH-819x1024.jpg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop'
     },
-  ]
-
-  const achievements = [
-    {
-      year: '2016',
-      title: 'PPMK Establishment',
-      description: 'Founded with 50 pioneer members across 5 universities'
-    },
-    {
-      year: '2018',
-      title: 'First Cultural Festival',
-      description: 'Organized the inaugural Malaysia-Korea Cultural Exchange'
-    },
-    {
-      year: '2020',
-      title: 'Digital Transformation',
-      description: 'Launched online platforms during pandemic to maintain connections'
-    },
-    {
-      year: '2022',
-      title: 'Scholarship Program',
-      description: 'Established partnership for Malaysian student scholarships'
-    },
-    {
-      year: '2024',
-      title: '500+ Members',
-      description: 'Reached milestone of 500+ active members across 15+ universities'
-    }
   ]
 
   const sponsors = [
@@ -174,38 +147,8 @@ const About = () => {
     }
   ]
 
-  const SponsorCard = ({ sponsor }) => (
-  <div className="group text-center p-4 hover:bg-gray-50 rounded-lg transition-colors duration-300">
-    <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center bg-gray-50 rounded-lg group-hover:bg-white transition-colors duration-300">
-      <img
-        src={sponsor.logo}
-        alt={sponsor.name}
-        className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
-        onError={(e) => {
-          const img = e.target as HTMLImageElement;
-          img.style.display = 'none';
-          if (img.nextSibling && img.nextSibling instanceof HTMLElement) {
-            (img.nextSibling as HTMLElement).style.display = 'flex';
-          }
-        }}
-      />
-      <div className="hidden w-full h-full bg-gradient-to-br from-ppmk-dark to-ppmk-dark/80 rounded-lg items-center justify-center">
-        <span className="text-white text-xs font-semibold text-center px-2">
-          {sponsor.name.split(' ').slice(0, 3).join(' ')}
-        </span>
-      </div>
-    </div>
-    <h4 className="text-xs font-medium text-ppmk-dark text-center leading-tight mb-1">
-      {sponsor.name}
-    </h4>
-    <p className="text-xs text-ppmk-dark/60 text-center">
-      {sponsor.category}
-    </p>
-  </div>
-);
-
   return (
-    <div className="pt-8 pb-12 bg-ppmk-light min-h-screen">
+    <div className="pt-8 pb-12 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header Section */}
         <div className="backdrop-blur-md bg-white/10 rounded-3xl p-8 sm:p-12 border border-white/20 shadow-2xl mb-16">
@@ -273,37 +216,50 @@ const About = () => {
             })}
           </div>
         </div>
-
-        {/* Timeline */}
-        <div className="mb-16">
+        
+        {/* --- OUR JOURNEY TIMELINE --- */}
+        <section className="mb-20">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-ppmk-dark mb-4">Our Journey</h2>
-            <p className="text-xl text-ppmk-dark/70">Key milestones in PPMK's history</p>
+            <h2 className="text-4xl font-bold text-[#003e58] mb-4">Our Journey</h2>
+            <p className="text-xl text-gray-600">Key milestones in PPMK's history.</p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8 border border-ppmk-dark/10">
-            <div className="space-y-8">
-              {achievements.map((achievement, index) => (
-                <div key={index} className="flex items-start space-x-6">
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 bg-ppmk-dark rounded-full flex items-center justify-center">
-                      <span className="text-ppmk-accent font-bold text-sm">{achievement.year}</span>
+          <div className="bg-ppmk-light rounded-xl shadow-lg p-10 border border-gray-200/80">
+            <div className="relative py-12 mb-10 py-20">
+              {/* Timeline Bar */}
+              <div className="mt-5 absolute top-1/2 left-0 w-full h-1 bg-ppmk-dark -translate-y-1/2"></div>
+
+              {/* Centered Timeline Items */}
+              <div className="relative flex flex-wrap justify-center mt-10">
+                {journeyEvents.map((event, index) => (
+                  <div key={event.year} className="relative flex flex-col items-center w-48">
+                    {/* Event Label */}
+                    <div className={`absolute w-48 text-center ${index % 2 === 0 ? 'bottom-20' : 'top-20'}`}>
+                      <h3 className="text-lg font-bold text-ppmk-dark">{event.title}</h3>
+                      <div
+                        className="h-1 w-8 mx-auto my-1 rounded-full"
+                        style={{ backgroundColor: index % 2 === 0 ? '#003e58' : '#fdf9b4' }}
+                      ></div>
+                      <p className="text-sm text-gray-600">{event.description}</p>
+                    </div>
+
+                    {/* Year Circle */}
+                    <div
+                      className="w-20 h-20 rounded-full flex items-center justify-center font-bold text-lg z-10 border-4 border-[#f0f2ef]"
+                      style={{
+                        backgroundColor: index % 2 === 0 ? '#003e58' : '#fdf9b4',
+                        color: index % 2 === 0 ? '#fdf9b4' : '#003e58',
+                      }}
+                    >
+                      {event.year}
                     </div>
                   </div>
-                  <div className="flex-grow">
-                    <h3 className="text-xl font-bold text-ppmk-dark mb-2">{achievement.title}</h3>
-                    <p className="text-ppmk-dark/70">{achievement.description}</p>
-                  </div>
-                  {index === 0 && (
-                    <div className="flex-shrink-0">
-                      <Star className="w-6 h-6 text-ppmk-accent fill-current" />
-                    </div>
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        </section>
+
 
         {/* Embassy Team */}
         <div className="mb-16">
@@ -318,7 +274,7 @@ const About = () => {
                 <img 
                   src={leader.image} 
                   alt={leader.name}
-                  className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-ppmk-accent/50"
+                  className="w-28 h-28 rounded-full mx-auto mb-4 object-cover border-4 border-ppmk-accent/50"
                 />
                 <h3 className="text-xl font-bold text-ppmk-dark mb-1">{leader.name}</h3>
                 <p className="text-ppmk-dark font-medium mb-2">{leader.position}</p>
@@ -355,42 +311,42 @@ const About = () => {
             <p className="text-xl text-ppmk-dark/70">Our valued partners and supporters who make our mission possible</p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8 border border-ppmk-dark/10">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-center justify-items-center">
-              {sponsors.map((sponsor, index) => (
-                <div key={index} className="group text-center p-4 hover:bg-gray-50 rounded-lg transition-colors duration-300">
-                  <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center bg-gray-50 rounded-lg group-hover:bg-white transition-colors duration-300">
-                    <img
-                      src={sponsor.logo}
-                      alt={sponsor.name}
-                      className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
-                      }}
-                    />
-                    <div className="hidden w-full h-full bg-gradient-to-br from-ppmk-dark to-ppmk-dark/80 rounded-lg items-center justify-center">
-                      <span className="text-white text-xs font-semibold text-center px-2">
-                        {sponsor.name.split(' ').slice(0, 2).join(' ')}
-                      </span>
-                    </div>
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-ppmk-dark/10">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-center justify-items-center">
+            {sponsors.map((sponsor, index) => (
+              <div
+                key={index}
+                className="group text-center p-4 rounded-xl transition-all duration-300 hover:bg-white/50 hover:shadow-md"
+              >
+                <div className="relative w-20 h-20 mx-auto mb-4 flex items-center justify-center bg-white/40 rounded-xl border border-white/30 overflow-hidden">
+                  <img
+                    src={sponsor.logo}
+                    alt={sponsor.name}
+                    className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      const fallback = e.currentTarget.nextElementSibling;
+                      if (fallback) fallback.classList.remove('hidden');
+                    }}
+                  />
+                  <div className="hidden absolute inset-0 bg-gradient-to-br from-ppmk-dark to-ppmk-dark/80 rounded-xl flex items-center justify-center">
+                    <span className="text-white text-xs font-semibold px-2 text-center">
+                      {sponsor.name.split(' ').slice(0, 2).join(' ')}
+                    </span>
                   </div>
-                  <h4 className="text-xs font-medium text-ppmk-dark text-center leading-tight mb-1">
-                    {sponsor.name}
-                  </h4>
-                  <p className="text-xs text-ppmk-dark/60 text-center">
-                    {sponsor.category}
-                  </p>
                 </div>
-              ))}
-            </div>
-            
-            <div className="mt-8 text-center">
-              <p className="text-sm text-ppmk-dark/70 italic">
-                We extend our heartfelt gratitude to all our partners, sponsors, and supporters who continue to believe in our mission and contribute to the success of Malaysian students in Korea.
-              </p>
-            </div>
+                <h4 className="text-sm font-semibold text-gray-800 mb-1">{sponsor.name}</h4>
+                <p className="text-xs text-gray-500">{sponsor.category}</p>
+              </div>
+            ))}
           </div>
+
+          <div className="mt-10 text-center">
+            <p className="text-sm text-gray-600 italic">
+              We extend our heartfelt gratitude to all our partners, sponsors, and supporters who continue to believe in our mission and contribute to the success of Malaysian students in Korea.
+            </p>
+          </div>
+        </div>
         </div>
       </div>
     </div>

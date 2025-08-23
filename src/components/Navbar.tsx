@@ -1,98 +1,103 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   Menu, 
   X, 
   Home, 
   Info,
+  Handshake,
   Calendar, 
   Users, 
   LogIn, 
   LogOut,
   User
-} from 'lucide-react'
-import { useAuth } from '../contexts/AuthContext'
-import AuthModal from './AuthModal'
+} from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import AuthModal from './AuthModal';
 
+// Simplified interface, we only need the path for routing
 interface NavItem {
-  label: string
-  page: string
-  icon: React.ReactNode
-  protected?: boolean
+  label: string;
+  path: string;
+  icon: React.ReactNode;
+  protected?: boolean;
 }
 
-interface NavbarProps {
-  currentPage: string
-  setCurrentPage: (page: string) => void
-}
+const Navbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [redirectToPath, setRedirectToPath] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [showAuthModal, setShowAuthModal] = useState(false)
-  const [showUserDropdown, setShowUserDropdown] = useState(false)
-  const [redirectToCommunity, setRedirectToCommunity] = useState(false)
-  const dropdownRef = useRef<HTMLDivElement>(null)
-  const { user, signOut, loading } = useAuth()
+  const { user, signOut, loading } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const navItems: NavItem[] = [
-    { label: 'Home', page: 'home', icon: <Home size={18} /> },
-    { label: 'About Us', page: 'about', icon: <Info size={18} /> },
-    { label: 'Activities', page: 'activities', icon: <Calendar size={18} /> },
-    { label: 'Information', page: 'information', icon: <Info size={18} /> },
-    { label: 'Community', page: 'community', icon: <Users size={18} />, protected: true },
-  ]
+    { label: 'Home', path: '/', icon: <Home size={18} /> },
+    { label: 'About Us', path: '/about', icon: <Info size={18} /> },
+    { label: 'Events', path: '/events', icon: <Calendar size={18} /> },
+    { label: 'MeetUp', path: '/meetup', icon: <Handshake size={18} /> },
+    { label: 'Community', path: '/community', icon: <Users size={18} />, protected: true },
+  ];
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setShowUserDropdown(false)
+        setShowUserDropdown(false);
       }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
-    // If user just logged in and was trying to access community, redirect
-    if (user && redirectToCommunity) {
-      setRedirectToCommunity(false)
-      setCurrentPage('community')
+    if (user && redirectToPath) {
+      navigate(redirectToPath);
+      setRedirectToPath(null);
     }
-  }, [user, redirectToCommunity, setCurrentPage])
+  }, [user, redirectToPath, navigate]);
 
   const handleSignOut = async () => {
     try {
-      await signOut()
-      setShowUserDropdown(false)
-      // Redirect to home after logout if on community page
-      if (currentPage === 'community') {
-        setCurrentPage('home')
+      await signOut();
+      setShowUserDropdown(false);
+      if (location.pathname === '/community') {
+        navigate('/');
       }
     } catch (error) {
-      console.error('Error signing out:', error)
+      console.error('Error signing out:', error);
     }
-  }
+  };
 
   const handleNavClick = (item: NavItem) => {
     if (item.protected && !user) {
-      setRedirectToCommunity(true)
-      setShowAuthModal(true)
+      setRedirectToPath(item.path);
+      setShowAuthModal(true);
     } else {
-      setCurrentPage(item.page)
-      setIsOpen(false)
+      navigate(item.path);
+      setIsOpen(false);
     }
-  }
+  };
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-40 bg-white backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<nav className="fixed top-0 left-0 right-0 z-40 bg-white backdrop-blur-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <div className="flex items-center">
-              <div className="flex-shrink-0 flex items-center cursor-pointer" onClick={() => setCurrentPage('home')}>
-                <div className="p-3 rounded-2xl shadow-neumorphism">
-                  <Users className="h-8 w-8 text-neumorphism-primary" />
+              <div 
+                className="flex-shrink-0 flex items-center cursor-pointer transition-transform duration-300 " 
+                onClick={() => navigate('/')}
+              >
+                <div className="rounded-2xl shadow-neumorphism">
+                  <img
+                    src="https://scontent.fkul8-5.fna.fbcdn.net/v/t39.30808-6/432755197_429050673115871_3014554682847287965_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=74LJwlTTWAwQ7kNvwEKZsrd&_nc_oc=AdkoV2hqC85QEthdUg7YhqowCfT8uq208DGpkrEGEkL1s9G84pRW_gXDUnUIDFvwEC-1Hdex0b1u1tqAN6Uukzhn&_nc_zt=23&_nc_ht=scontent.fkul8-5.fna&_nc_gid=MUr8EjCP4yHmuQ6ceJH-mg&oh=00_AfUAMG1gXMX7JWJ4gGO5u-Aq4Nzq3gxpYcHjTGEIzzDIQg&oe=68AE9762"
+                    alt="PPMK Logo"
+                    className="h-20 w-20 object-contain"
+                  />
                 </div>
                 <div className="ml-3">
                   <span className="text-xl font-bold text-neumorphism-text">PPMK</span>
@@ -103,18 +108,18 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
 
             {/* Desktop Navigation */}
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-2">
+              <div className="ml-10 flex items-baseline space-x-2 ">
                 {navItems.map((item) => (
                   <button
                     key={item.label}
                     onClick={() => handleNavClick(item)}
                     className={`group px-4 py-3 rounded-2xl transition-all duration-300 flex items-center space-x-2 ${
-                      currentPage === item.page 
-                        ? 'shadow-neumorphism-inset text-neumorphism-primary' 
+                      location.pathname === item.path
+                        ? 'shadow-neumorphism-inset text-neumorphism-primary text-accent-600' 
                         : 'shadow-neumorphism hover:shadow-neumorphism-inset text-neumorphism-text hover:text-neumorphism-primary'
                     }`}
                   >
-                    <span className="transition-transform group-hover:scale-110">
+                    <span className="transition-transform duration-300 group-hover:scale-110">
                       {item.icon}
                     </span>
                     <span className="font-medium">{item.label}</span>
@@ -133,7 +138,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setShowUserDropdown(!showUserDropdown)}
-                    className="flex items-center space-x-3 px-5 py-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-inset transition-all duration-300"
+                    className="flex items-center space-x-3 px-5 py-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-inset hover:bg-gray-50 transition-all duration-300"
                   >
                     <div className="p-2 rounded-xl shadow-neumorphism-sm">
                       <User size={20} className="text-neumorphism-primary" />
@@ -142,13 +147,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                       {user.fullName || user.email.split('@')[0]}
                     </span>
                   </button>
-
-                  {/* Simplified User Dropdown */}
                   {showUserDropdown && (
                     <div className="absolute right-0 mt-3 w-64 rounded-2xl shadow-neumorphism-hover bg-white p-4 space-y-3 border border-[#003e58]">
-                      {/* User Info */}
                       <div className="p-3 rounded-xl shadow-neumorphism-inset bg-white">
                         <p className="text-sm font-semibold text-[#003e58] uppercase">
+                          {/* BUG FIX: Added [0] to correctly display the username part of the email */}
                           {user.fullName || user.email.split('@')[0]}
                         </p>
                         {user.university && (
@@ -158,17 +161,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                         )}
                         {user.batch && (
                           <p className="text-sm text-gray-600 uppercase">
-                            Batch {user.batch}
+                            {user.batch}
                           </p>
                         )}
                       </div>
-
-                      {/* Logout Button */}
                       <button
                         onClick={handleSignOut}
-                        className="w-full py-2 px-4 rounded-xl font-semibold text-white 
-                                  bg-[#003e58]
-                                  hover:opacity-90 transition"
+                        className="w-full py-2 px-4 rounded-xl font-semibold text-white bg-[#003e58] hover:opacity-90 transition-opacity duration-300"
                       >
                         Logout
                       </button>
@@ -178,7 +177,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
               ) : (
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="flex items-center space-x-2 px-6 py-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-hover transition-all duration-300 text-neumorphism-primary"
+                  className="flex items-center space-x-2 px-6 py-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-hover hover:bg-blue-50 transition-all duration-300 text-neumorphism-primary"
                 >
                   <LogIn size={20} />
                   <span className="font-semibold">Login</span>
@@ -190,7 +189,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
             <div className="md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-inset transition-all duration-300 text-neumorphism-text"
+                className="p-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-inset hover:bg-gray-50 transition-all duration-300 text-neumorphism-text"
               >
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -207,9 +206,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                   key={item.label}
                   onClick={() => handleNavClick(item)}
                   className={`w-full flex items-center space-x-3 px-4 py-3 rounded-2xl transition-all duration-300 ${
-                    currentPage === item.page 
+                    location.pathname === item.path
                       ? 'shadow-neumorphism-inset text-neumorphism-primary' 
-                      : 'shadow-neumorphism hover:shadow-neumorphism-inset text-neumorphism-text'
+                      : 'shadow-neumorphism hover:shadow-neumorphism-inset hover:text-neumorphism-primary'
                   }`}
                 >
                   {item.icon}
@@ -237,7 +236,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                     </div>
                     <button
                       onClick={handleSignOut}
-                      className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-inset transition-all duration-300 text-neumorphism-accent"
+                      className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-inset hover:bg-red-50 hover:text-red-600 transition-all duration-300 text-neumorphism-accent"
                     >
                       <LogOut size={18} />
                       <span className="font-medium">Logout</span>
@@ -246,10 +245,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                 ) : (
                   <button
                     onClick={() => {
-                      setShowAuthModal(true)
-                      setIsOpen(false)
+                      setShowAuthModal(true);
+                      setIsOpen(false);
                     }}
-                    className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-hover transition-all duration-300 text-neumorphism-primary"
+                    className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-2xl shadow-neumorphism hover:shadow-neumorphism-hover hover:text-neumorphism-primary hover:bg-blue-50 transition-all duration-300 text-neumorphism-primary"
                   >
                     <LogIn size={20} />
                     <span className="font-semibold">Login</span>
@@ -265,12 +264,15 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
       <AuthModal 
         isOpen={showAuthModal} 
         onClose={() => {
-          setShowAuthModal(false)
-          setRedirectToCommunity(false)
+          setShowAuthModal(false);
+          setRedirectToPath(null);
+        }}
+        onSuccess={() => {
+          // Handled by useEffect
         }} 
       />
     </>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

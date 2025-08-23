@@ -6,6 +6,8 @@ interface AuthContextType extends AuthState {
   signIn: (email: string, password: string) => Promise<void>
   signUp: (email: string, password: string, metadata: any) => Promise<void>
   signOut: () => Promise<void>
+  pendingAction: string | null
+  setPendingAction: (action: string | null) => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -24,6 +26,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     loading: true,
     error: null
   })
+  const [pendingAction, setPendingAction] = useState<string | null>(null)
 
   useEffect(() => {
     checkUser()
@@ -104,6 +107,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { error } = await supabase.auth.signOut()
       if (error) throw error
       setAuthState({ user: null, loading: false, error: null })
+      setPendingAction(null) // Clear any pending actions
     } catch (error: any) {
       setAuthState(prev => ({ ...prev, loading: false, error: error.message }))
       throw error
@@ -111,7 +115,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }
 
   return (
-    <AuthContext.Provider value={{ ...authState, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ 
+      ...authState, 
+      signIn, 
+      signUp, 
+      signOut, 
+      pendingAction, 
+      setPendingAction 
+    }}>
       {children}
     </AuthContext.Provider>
   )

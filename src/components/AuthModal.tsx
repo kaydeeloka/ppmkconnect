@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext'
 interface AuthModalProps {
   isOpen: boolean
   onClose: () => void
+  onSuccess: () => void
 }
 
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
