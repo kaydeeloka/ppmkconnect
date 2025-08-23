@@ -13,8 +13,8 @@ const Footer = () => {
   ]
 
   const supportLinks = [
-    { name: 'Downloadable Guide', href: '/information#downloadableGuide', external: false },
-    { name: 'FAQ', href: '/information#faq', external: false },
+    { name: 'Downloadable Guide', href: '#', external: false },
+    { name: 'FAQ', href: '#', external: false },
     // Mark this as an external link
     { 
       name: 'Information booklet', 

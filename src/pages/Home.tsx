@@ -8,11 +8,10 @@ import PieChart from '../components/PieChart'
 interface SocialCardProps {
   icon: React.ComponentType<{ className?: string }>
   handle: string
-  label: string
   gradient: string
 }
 
-const SocialCard: React.FC<SocialCardProps> = ({ icon: Icon, handle, label, gradient }) => {
+const SocialCard: React.FC<SocialCardProps> = ({ icon: Icon, handle, gradient }) => {
   return (
     <div className="flex items-center space-x-4 backdrop-blur-md bg-white/10 rounded-2xl border border-white/20 p-6 hover:bg-white/20 transition-all duration-300 cursor-pointer group">
       <div className={`p-3 rounded-xl bg-gradient-to-r ${gradient} text-white shadow-lg group-hover:scale-110 transition-transform duration-200`}>
@@ -20,9 +19,6 @@ const SocialCard: React.FC<SocialCardProps> = ({ icon: Icon, handle, label, grad
       </div>
       <div className="text-left">
         <p className="font-semibold text-white">{handle}</p>
-        <button className="px-4 py-1 mt-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black rounded-full text-sm font-medium hover:from-yellow-500 hover:to-yellow-600 transition-all duration-200 shadow-md">
-          {label}
-        </button>
       </div>
     </div>
   );
@@ -189,14 +185,12 @@ const Home = () => {
             <SocialCard 
               icon={Instagram}
               handle="@ppmkofficial"
-              label="Visit"
               gradient="from-pink-500 to-purple-600"
             /> </a>
             <a href="https://www.facebook.com/ppmkofficial/" target="_blank" rel="noopener noreferrer">
             <SocialCard 
               icon={Facebook}
               handle="PPMK"
-              label="Visit"
               gradient="from-blue-500 to-blue-700"
             /></a>
           </div>

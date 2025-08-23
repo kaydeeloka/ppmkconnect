@@ -637,8 +637,7 @@ const Community = () => {
                         href={university.communityLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-4 py-2 bg-primary-900 text-white rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl"
-                      >
+												className="px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl transition-all duration-300 font-semibold shadow-lg hover:shadow-xl"                      >
                         Join Community
                      </a>
                     </div>
